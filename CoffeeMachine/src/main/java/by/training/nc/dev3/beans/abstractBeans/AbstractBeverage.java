@@ -1,7 +1,6 @@
-package by.training.nc.dev3.beans;
+package by.training.nc.dev3.beans.abstractBeans;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -25,18 +24,31 @@ public class AbstractBeverage {
         listOfIngredients.add(abstractIngredient);
     }
 
-    public void removeIngredients(AbstractIngredient abstractIngredient)
+    public void removeIngredient(AbstractIngredient abstractIngredient)
     {
         if(listOfIngredients.contains(abstractIngredient))
             listOfIngredients.remove(abstractIngredient);
     }
 
-    public void showIngredients()
+    public void removeAllIngredients()
     {
+        listOfIngredients = new ArrayList<AbstractIngredient>();
+    }
+
+    public List<AbstractIngredient> getListOfIngredients() {
+        return listOfIngredients;
+    }
+
+    public String showIngredients()
+    {
+        String allIngredients="";
         for(AbstractIngredient ingredient:listOfIngredients)
         {
-            System.out.println(ingredient);
+            allIngredients += "+";
+            allIngredients+=ingredient.getDescription();
+
         }
+        return  allIngredients;
     }
 
     @Override
@@ -47,7 +59,8 @@ public class AbstractBeverage {
         AbstractBeverage that = (AbstractBeverage) o;
 
         if (Double.compare(that.cost, cost) != 0) return false;
-        return description.equals(that.description);
+        if (!description.equals(that.description)) return false;
+        return listOfIngredients != null ? listOfIngredients.equals(that.listOfIngredients) : that.listOfIngredients == null;
     }
 
     @Override
@@ -57,8 +70,12 @@ public class AbstractBeverage {
         result = description.hashCode();
         temp = Double.doubleToLongBits(cost);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (listOfIngredients != null ? listOfIngredients.hashCode() : 0);
         return result;
     }
+
+
+
 
     @Override
     public String toString() {

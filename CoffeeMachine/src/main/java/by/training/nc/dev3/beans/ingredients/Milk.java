@@ -1,6 +1,6 @@
 package by.training.nc.dev3.beans.ingredients;
 
-import by.training.nc.dev3.beans.AbstractIngredient;
+import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
 
 /**
  * Created by Win on 19.03.2017.

@@ -1,7 +1,7 @@
 package by.training.nc.dev3.beans.bill;
 
-import by.training.nc.dev3.beans.AbstractBeverage;
-import by.training.nc.dev3.beans.AbstractIngredient;
+import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
+import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,9 @@ import java.util.List;
  */
 public class Bill {
    private List<AbstractBeverage> beverages = new ArrayList<AbstractBeverage>();
-   private List<AbstractIngredient> ingredients=new ArrayList<AbstractIngredient>();
 
-    public void addBeverageInBill(AbstractBeverage beverage) {
+   public void addBeverageInBill(AbstractBeverage beverage) {
         beverages.add(beverage);
-    }
-
-    public void addBIngredientInBill(AbstractIngredient ingredient) {
-        ingredients.add(ingredient);
     }
 
     public boolean billContainBeverage(AbstractBeverage beverage) {
@@ -28,33 +23,14 @@ public class Bill {
             return false;
     }
 
-    public boolean removeBeverageFromBill(AbstractBeverage beverage) {
-        if (beverages.contains(beverage)) {
-            beverages.remove(beverage);
-            return true;
-        }
-        else
-            return false;
+    public void removeBeverageFromBill(AbstractBeverage beverage) {
+        beverages.remove(beverage);
     }
-    public boolean removeIngredientFromBill(AbstractIngredient ingredient) {
-        if (ingredients.contains(ingredient)) {
-            ingredients.remove(ingredient);
-            return true;
-        }
-        else
-            return false;
-    }
-
 
     public void showResultBill() {
-
         if(!beverages.isEmpty())
             for (AbstractBeverage beverage : beverages) {
-                System.out.println(" "+beverage.getDescription()+" "+"cost:"+beverage.getCost());
-            }
-        if(!ingredients.isEmpty())
-            for (AbstractIngredient ingredient : ingredients) {
-                System.out.println(" "+ingredient.getDescription()+" "+"cost:"+ingredient.getCost());
+                System.out.println("beverage:"+beverage.getDescription()+beverage.showIngredients());
             }
     }
 
@@ -62,7 +38,4 @@ public class Bill {
         return beverages;
     }
 
-    public List<AbstractIngredient> getIngredients() {
-        return ingredients;
-    }
 }

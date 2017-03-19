@@ -1,6 +1,8 @@
 package by.training.nc.dev3.beans.persons;
 
 import by.training.nc.dev3.beans.*;
+import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
+import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
 import by.training.nc.dev3.beans.bill.Bill;
 import by.training.nc.dev3.beans.bill.BillCalculator;
 
@@ -27,33 +29,51 @@ public class Client {
 
 
     public void addIngredient(AbstractBeverage beverage, AbstractIngredient ingredient) {
-        if(bill.billContainBeverage(beverage))
+        /*if(bill.billContainBeverage(beverage))
             if(coffeeMachine.checkIngredientCount(ingredient)>0) {
-                bill.addBIngredientInBill(ingredient);
+                bill.addIngredientInBill(ingredient);
                 coffeeMachine.removeIngredient(ingredient);
             }
-        //exeption
+        //exeption*/
+        if(bill.billContainBeverage(beverage))
+            if(coffeeMachine.checkIngredientCount(ingredient)>0) {
+                beverage.AddIngredient(ingredient);
+                coffeeMachine.removeIngredient(ingredient);
+            }
     }
 
 
     public void removeBeverageFromBill(AbstractBeverage beverage) {
-        if(bill.removeBeverageFromBill(beverage))
-            coffeeMachine.addBeverage(beverage,1);
+
+        if(bill.billContainBeverage(beverage)) {
+            for(AbstractIngredient ingredient:beverage.getListOfIngredients())
+                coffeeMachine.addIngredient(ingredient,1);
+            beverage.removeAllIngredients();
+            bill.removeBeverageFromBill(beverage);
+            coffeeMachine.addBeverage(beverage, 1);
+        }
     }
 
-    public void removeIngredientFromBill(AbstractIngredient ingredient) {
-        if(bill.removeIngredientFromBill(ingredient))
+    public void removeIngredientFromBill(AbstractBeverage beverage,AbstractIngredient ingredient) {
+        if(bill.billContainBeverage(beverage))
+        {
+            beverage.removeIngredient(ingredient);
             coffeeMachine.addIngredient(ingredient,1);
+
+        }
+        /*if(bill.removeIngredientFromBill(ingredient))
+            coffeeMachine.addIngredient(ingredient,1);*/
     }
 
     public void showResultBill()
     {
         System.out.println("***************Bill***********************");
         bill.showResultBill();
+        showResultCost();
 
     }
 
-    public void showResultCost()
+    private void showResultCost()
     {
         BillCalculator billCalculator=new BillCalculator();
         billCalculator.calculate(bill);

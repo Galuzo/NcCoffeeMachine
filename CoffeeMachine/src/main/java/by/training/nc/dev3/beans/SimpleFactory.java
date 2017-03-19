@@ -1,5 +1,7 @@
 package by.training.nc.dev3.beans;
 
+import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
+import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
 import by.training.nc.dev3.beans.beverages.Latte;
 import by.training.nc.dev3.beans.beverages.Tea;
 import by.training.nc.dev3.beans.ingredients.Chocolate;

@@ -1,7 +1,7 @@
 package by.training.nc.dev3.beans.persons;
 
-import by.training.nc.dev3.beans.AbstractBeverage;
-import by.training.nc.dev3.beans.AbstractIngredient;
+import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
+import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
 import by.training.nc.dev3.beans.CoffeeMachine;
 import by.training.nc.dev3.beans.SimpleFactory;
 import by.training.nc.dev3.enums.BeverageType;
