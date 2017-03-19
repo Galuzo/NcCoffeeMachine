@@ -1,4 +1,7 @@
-package by.training.nc.dev3.beans;
+package by.training.nc.dev3.beans.bill;
+
+import by.training.nc.dev3.beans.AbstractBeverage;
+import by.training.nc.dev3.beans.AbstractIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.List;
  */
 public class Bill {
    private List<AbstractBeverage> beverages = new ArrayList<AbstractBeverage>();
-   private List<AbstractIngredient > ingredients=new ArrayList<AbstractIngredient>();
+   private List<AbstractIngredient> ingredients=new ArrayList<AbstractIngredient>();
 
     public void addBeverageInBill(AbstractBeverage beverage) {
         beverages.add(beverage);
