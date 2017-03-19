@@ -29,12 +29,6 @@ public class Client {
 
 
     public void addIngredient(AbstractBeverage beverage, AbstractIngredient ingredient) {
-        /*if(bill.billContainBeverage(beverage))
-            if(coffeeMachine.checkIngredientCount(ingredient)>0) {
-                bill.addIngredientInBill(ingredient);
-                coffeeMachine.removeIngredient(ingredient);
-            }
-        //exeption*/
         if(bill.billContainBeverage(beverage))
             if(coffeeMachine.checkIngredientCount(ingredient)>0) {
                 beverage.AddIngredient(ingredient);
@@ -61,8 +55,7 @@ public class Client {
             coffeeMachine.addIngredient(ingredient,1);
 
         }
-        /*if(bill.removeIngredientFromBill(ingredient))
-            coffeeMachine.addIngredient(ingredient,1);*/
+
     }
 
     public void showResultBill()
