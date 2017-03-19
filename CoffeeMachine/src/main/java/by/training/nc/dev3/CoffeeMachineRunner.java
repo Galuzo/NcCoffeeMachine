@@ -16,12 +16,12 @@ public class CoffeeMachineRunner {
         Latte latte = new Latte();
         Chocolate chocolate=new Chocolate();
         client.buyBeverage(latte);
+        client.buyBeverage(latte);
         client.addIngredient(latte,chocolate);
         coffeeMachine.showAssortiment();
         client.showResultBill();
-        client.removeBeverageFromBill(latte);
-        client.removeIngredientFromBill(chocolate);
+
         client.showResultBill();
-        coffeeMachine.showAssortiment();
+        client.showResultCost();
     }
 }

@@ -1,9 +1,6 @@
 package by.training.nc.dev3.beans.persons;
 
-import by.training.nc.dev3.beans.AbstractBeverage;
-import by.training.nc.dev3.beans.AbstractIngredient;
-import by.training.nc.dev3.beans.Bill;
-import by.training.nc.dev3.beans.CoffeeMachine;
+import by.training.nc.dev3.beans.*;
 
 /**
  * Created by Win on 18.03.2017.
@@ -51,5 +48,13 @@ public class Client {
     {
         System.out.println("***************Bill***********************");
         bill.showResultBill();
+
+    }
+
+    public void showResultCost()
+    {
+        BillCalculator billCalculator=new BillCalculator();
+        billCalculator.calculate(bill);
+        System.out.format("ResultCost=%.4f",billCalculator.getResultCost());
     }
 }

@@ -55,9 +55,11 @@ public class Bill {
             }
     }
 
+    public List<AbstractBeverage> getBeverages() {
+        return beverages;
+    }
 
-
-
-
-
+    public List<AbstractIngredient> getIngredients() {
+        return ingredients;
+    }
 }
