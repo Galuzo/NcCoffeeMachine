@@ -48,6 +48,17 @@ public class AbstractBeverage {
 
     @Override
     public String toString() {
-        return name;
+        return "Beverage:"
+                 + name  +
+                " cost=" + cost +
+                ", Ingredients:" + listOfIngredients;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 }

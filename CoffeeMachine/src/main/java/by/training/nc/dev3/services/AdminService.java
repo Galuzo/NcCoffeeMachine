@@ -1,4 +1,4 @@
-package by.training.nc.dev3.beans.services;
+package by.training.nc.dev3.services;
 
 import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
 import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;

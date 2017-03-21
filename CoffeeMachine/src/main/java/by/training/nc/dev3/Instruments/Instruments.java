@@ -1,4 +1,4 @@
-package by.training.nc.dev3.beans;
+package by.training.nc.dev3.Instruments;
 
 import java.util.Map;
 

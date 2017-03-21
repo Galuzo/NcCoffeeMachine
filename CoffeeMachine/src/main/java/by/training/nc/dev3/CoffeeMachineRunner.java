@@ -1,42 +1,40 @@
 package by.training.nc.dev3;
 
-import by.training.nc.dev3.beans.persons.Administrator;
-import by.training.nc.dev3.beans.services.AdminService;
-import by.training.nc.dev3.beans.services.BillService;
-import by.training.nc.dev3.beans.services.ClientService;
-import by.training.nc.dev3.beans.CoffeeMachine;
-import by.training.nc.dev3.beans.SimpleFactory;
-import by.training.nc.dev3.beans.beverages.Latte;
 import by.training.nc.dev3.beans.beverages.Tea;
 import by.training.nc.dev3.beans.ingredients.Chocolate;
+import by.training.nc.dev3.beans.ingredients.Milk;
+import by.training.nc.dev3.services.BillService;
+import by.training.nc.dev3.services.ClientService;
+import by.training.nc.dev3.beans.coffeeMachine.CoffeeMachine;
+import by.training.nc.dev3.fabrics.SimpleFactory;
+import by.training.nc.dev3.beans.beverages.Latte;
 import by.training.nc.dev3.beans.persons.Client;
-import by.training.nc.dev3.beans.services.CoffeeMachineService;
-import by.training.nc.dev3.enums.BeverageType;
-import by.training.nc.dev3.enums.IngredientType;
+import by.training.nc.dev3.services.CoffeeMachineService;
 
 /**
  * Created by Win on 18.03.2017.
  */
 public class CoffeeMachineRunner {
     public static void main(String[] args) {
-        SimpleFactory simpleFactory=new SimpleFactory();
-        CoffeeMachine coffeeMachine=new CoffeeMachine();
-        Client client = new Client(coffeeMachine);
-        Chocolate chocolate=new Chocolate();
-        Latte latte=new Latte();
-        Tea tea=new Tea();
-
-        ClientService clientService=new ClientService();
-        clientService.addBeverageInBill(client,latte);
-        BillService billService=new BillService();
-        billService.showResultBill(client);
         CoffeeMachineService coffeeMachineService=new CoffeeMachineService();
+        CoffeeMachine coffeeMachine=new CoffeeMachine();
+
+       ClientService clientService=new ClientService(coffeeMachine);
+       Latte latte=new Latte();
+        Tea tea=new Tea();
+        Milk milk = new Milk();
+        Chocolate chocolate=new Chocolate();
+        Client client = new Client();
+        clientService.addBeverageInBill(client,latte);
+        clientService.addBeverageInBill(client,tea);
+        clientService.addIngredient(client,tea,chocolate);
+        clientService.addIngredient(client,latte,chocolate);
+        BillService billService = new BillService();
+        billService.showResultBill(client);
+        clientService.addIngredient(client,tea,milk);
+        billService.showResultBill(client);
         coffeeMachineService.showAssortiment(coffeeMachine);
-        Administrator administrator = new Administrator(coffeeMachine);
-        AdminService adminService=new AdminService();
-        adminService.addBeverage(administrator, BeverageType.LATTE,5);
-        adminService.addIngredient(administrator,IngredientType.CHOCOLATE,5);
-        coffeeMachineService.showAssortiment(coffeeMachine);
+
 
         /*CoffeeMachine coffeeMachine=new CoffeeMachine();
         coffeeMachine.showAssortiment();

@@ -17,7 +17,8 @@ public class AbstractIngredient {
 
     @Override
     public String toString() {
-        return name;
+        return "name='" + name + '\'' +
+                ", cost=" + cost;
     }
 
     @Override
@@ -39,5 +40,13 @@ public class AbstractIngredient {
         temp = Double.doubleToLongBits(cost);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 }

@@ -1,9 +1,9 @@
-package by.training.nc.dev3.beans.services;
+package by.training.nc.dev3.services;
 
-import by.training.nc.dev3.beans.Instruments;
+import by.training.nc.dev3.beans.coffeeMachine.CoffeeMachine;
+import by.training.nc.dev3.Instruments.Instruments;
 import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
 import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
-import by.training.nc.dev3.beans.bill.BillCalculator;
 import by.training.nc.dev3.beans.persons.Client;
 
 import java.util.List;
@@ -14,10 +14,15 @@ import java.util.Set;
  * Created by Win on 21.03.2017.
  */
 public class ClientService {
+    private CoffeeMachine coffeeMachine;
 
+    public  ClientService(CoffeeMachine coffeeMachine)
+    {
+        this.coffeeMachine=coffeeMachine;
+    }
 
     public void addBeverageInBill(Client client,AbstractBeverage beverage) {
-        Map<AbstractBeverage,Integer> beverages=client.getCoffeeMachine().getBeverages();
+        Map<AbstractBeverage,Integer> beverages=coffeeMachine.getBeverages();
         List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
         if(Instruments.checkCount(beverages,beverage)>0)
         {
@@ -30,7 +35,7 @@ public class ClientService {
 
     public void addIngredient(Client client,AbstractBeverage beverage, AbstractIngredient ingredient) {
         List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
-        Map<AbstractIngredient,Integer> allIngredients=client.getCoffeeMachine().getIngredients();
+        Map<AbstractIngredient,Integer> allIngredients=coffeeMachine.getIngredients();
         Set<AbstractIngredient> currentIngredients=beverage.getListOfIngredients();
         if(beveragesInBill.contains(beverage))
             if(Instruments.checkCount(allIngredients,ingredient)>0)
@@ -44,8 +49,8 @@ public class ClientService {
 
     public void removeBeverageFromBill(Client client,AbstractBeverage beverage) {
         List<AbstractBeverage> beverages=client.getBill().getBeverages();
-        Map<AbstractIngredient,Integer> allIngredientsInMachine=client.getCoffeeMachine().getIngredients();
-        Map<AbstractBeverage,Integer> allBeveragesInMachine=client.getCoffeeMachine().getBeverages();
+        Map<AbstractIngredient,Integer> allIngredientsInMachine=coffeeMachine.getIngredients();
+        Map<AbstractBeverage,Integer> allBeveragesInMachine=coffeeMachine.getBeverages();
         int value;
         if(beverages.contains(beverage))
             for(AbstractIngredient ingredient:beverage.getListOfIngredients())
@@ -62,7 +67,7 @@ public class ClientService {
 
     public void removeIngredientFromBill(Client client,AbstractBeverage beverage,AbstractIngredient ingredient) {
         List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
-        Map<AbstractIngredient,Integer> allIngredientsInMachine=client.getCoffeeMachine().getIngredients();
+        Map<AbstractIngredient,Integer> allIngredientsInMachine=coffeeMachine.getIngredients();
         int value;
         if(beveragesInBill.contains(beverage))
         {

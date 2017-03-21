@@ -1,6 +1,6 @@
-package by.training.nc.dev3.beans.services;
+package by.training.nc.dev3.services;
 
-import by.training.nc.dev3.beans.CoffeeMachine;
+import by.training.nc.dev3.beans.coffeeMachine.CoffeeMachine;
 import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
 import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
 
@@ -16,11 +16,11 @@ public class CoffeeMachineService {
         System.out.println("***************Assortiment*****************");
         System.out.println("Beverages: ");
         for (Map.Entry<AbstractBeverage, Integer> entry : coffeeMachine.getBeverages().entrySet()) {
-            System.out.println(" "+ entry.getKey() + " count= " + entry.getValue());
+            System.out.println(" "+ entry.getKey().getName() + " count=" + entry.getValue()+" ,cost="+entry.getKey().getCost());
         }
         System.out.println("Ingredients: ");
         for (Map.Entry<AbstractIngredient, Integer> entry : coffeeMachine.getIngredients().entrySet()) {
-            System.out.println(" "+entry.getKey() + " count= " + entry.getValue());
+            System.out.println(" "+entry.getKey().getName() + " count=" + entry.getValue()+",cost="+entry.getKey().getCost());
         }
 
     }
