@@ -36,19 +36,7 @@ public class CoffeeMachine {
         return beverages;
     }
 
-    public void showAssortiment()
-    {
-        System.out.println("***************Assortiment*****************");
-        System.out.println("Beverages: ");
-        for (Map.Entry<AbstractBeverage, Integer> entry : beverages.entrySet()) {
-            System.out.println(" "+ entry.getKey() + " count= " + entry.getValue());
-        }
-        System.out.println("Ingredients: ");
-        for (Map.Entry<AbstractIngredient, Integer> entry : ingredients.entrySet()) {
-            System.out.println(" "+entry.getKey() + " count= " + entry.getValue());
-        }
 
-    }
 
 
 }

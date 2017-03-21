@@ -21,26 +21,11 @@ public class Administrator {
         simpleFactory=new SimpleFactory();
     }
 
-    public void addBeverage(BeverageType beverageType,int count)
-    {
-        AbstractBeverage beverage;
-        beverage=simpleFactory.createBeverage(beverageType);
-        Map<AbstractBeverage,Integer> beverages=coffeeMachine.getBeverages();
-        if(beverages.containsKey(beverage))
-        {
-            int currentCount = beverages.get(beverage);
-            currentCount+=count;
-            beverages.put(beverage, currentCount);
-        }
-        else
-            beverages.put(beverage,count);
-        //coffeeMachine.addBeverage(beverage,1);
-    }
-    public void addIngredient(IngredientType ingredientType)
-    {
-        AbstractIngredient ingredient;
-        ingredient=simpleFactory.createIngredient(ingredientType);
-        //coffeeMachine.addIngredient(ingredient,1);
+    public CoffeeMachine getCoffeeMachine() {
+        return coffeeMachine;
     }
 
+    public SimpleFactory getSimpleFactory() {
+        return simpleFactory;
+    }
 }

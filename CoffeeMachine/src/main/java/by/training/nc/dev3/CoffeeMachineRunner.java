@@ -1,14 +1,16 @@
 package by.training.nc.dev3;
 
+import by.training.nc.dev3.beans.persons.Administrator;
+import by.training.nc.dev3.beans.services.AdminService;
+import by.training.nc.dev3.beans.services.BillService;
+import by.training.nc.dev3.beans.services.ClientService;
 import by.training.nc.dev3.beans.CoffeeMachine;
 import by.training.nc.dev3.beans.SimpleFactory;
-import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
 import by.training.nc.dev3.beans.beverages.Latte;
 import by.training.nc.dev3.beans.beverages.Tea;
 import by.training.nc.dev3.beans.ingredients.Chocolate;
-import by.training.nc.dev3.beans.ingredients.Milk;
-import by.training.nc.dev3.beans.persons.Administrator;
 import by.training.nc.dev3.beans.persons.Client;
+import by.training.nc.dev3.beans.services.CoffeeMachineService;
 import by.training.nc.dev3.enums.BeverageType;
 import by.training.nc.dev3.enums.IngredientType;
 
@@ -23,13 +25,19 @@ public class CoffeeMachineRunner {
         Chocolate chocolate=new Chocolate();
         Latte latte=new Latte();
         Tea tea=new Tea();
-        coffeeMachine.showAssortiment();
-        client.addBeverageInBill(latte);
-        client.addBeverageInBill(tea);
-        client.addIngredient(tea,chocolate);
-        client.removeIngredientFromBill(tea,chocolate);
-        client.showResultBill();
-        coffeeMachine.showAssortiment();
+
+        ClientService clientService=new ClientService();
+        clientService.addBeverageInBill(client,latte);
+        BillService billService=new BillService();
+        billService.showResultBill(client);
+        CoffeeMachineService coffeeMachineService=new CoffeeMachineService();
+        coffeeMachineService.showAssortiment(coffeeMachine);
+        Administrator administrator = new Administrator(coffeeMachine);
+        AdminService adminService=new AdminService();
+        adminService.addBeverage(administrator, BeverageType.LATTE,5);
+        adminService.addIngredient(administrator,IngredientType.CHOCOLATE,5);
+        coffeeMachineService.showAssortiment(coffeeMachine);
+
         /*CoffeeMachine coffeeMachine=new CoffeeMachine();
         coffeeMachine.showAssortiment();
         Administrator administrator = new Administrator(coffeeMachine);
