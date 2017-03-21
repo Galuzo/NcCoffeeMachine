@@ -8,7 +8,7 @@ import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
 public class Latte extends AbstractBeverage {
     public Latte()
     {
-        description = "Latte";
+        name = "Latte";
         cost=1.9;
     }
 }

@@ -7,6 +7,8 @@ import by.training.nc.dev3.beans.SimpleFactory;
 import by.training.nc.dev3.enums.BeverageType;
 import by.training.nc.dev3.enums.IngredientType;
 
+import java.util.Map;
+
 /**
  * Created by Win on 18.03.2017.
  */
@@ -19,17 +21,26 @@ public class Administrator {
         simpleFactory=new SimpleFactory();
     }
 
-    public void addBeverage(BeverageType beverageType)
+    public void addBeverage(BeverageType beverageType,int count)
     {
         AbstractBeverage beverage;
         beverage=simpleFactory.createBeverage(beverageType);
-        coffeeMachine.addBeverage(beverage,1);
+        Map<AbstractBeverage,Integer> beverages=coffeeMachine.getBeverages();
+        if(beverages.containsKey(beverage))
+        {
+            int currentCount = beverages.get(beverage);
+            currentCount+=count;
+            beverages.put(beverage, currentCount);
+        }
+        else
+            beverages.put(beverage,count);
+        //coffeeMachine.addBeverage(beverage,1);
     }
     public void addIngredient(IngredientType ingredientType)
     {
         AbstractIngredient ingredient;
         ingredient=simpleFactory.createIngredient(ingredientType);
-        coffeeMachine.addIngredient(ingredient,1);
+        //coffeeMachine.addIngredient(ingredient,1);
     }
 
 }

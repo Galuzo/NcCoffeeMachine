@@ -9,7 +9,7 @@ public class Chocolate extends AbstractIngredient {
     public Chocolate()
     {
         this.cost=0.6;
-        this.description="Chocolate";
+        this.name="Chocolate";
     }
 
 }

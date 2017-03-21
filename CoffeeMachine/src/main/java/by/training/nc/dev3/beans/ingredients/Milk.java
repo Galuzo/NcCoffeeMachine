@@ -7,7 +7,7 @@ import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
  */
 public class Milk extends AbstractIngredient {
     public Milk() {
-        this.description = "Milk";
+        this.name = "Milk";
         this.cost=0.6;
     }
 }

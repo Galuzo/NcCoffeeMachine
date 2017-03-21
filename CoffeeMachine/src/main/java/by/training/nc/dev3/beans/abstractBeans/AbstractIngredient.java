@@ -4,11 +4,11 @@ package by.training.nc.dev3.beans.abstractBeans;
  * Created by Win on 18.03.2017.
  */
 public class AbstractIngredient {
-    protected String description;
+    protected String name;
     protected double cost;
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
     public double getCost() {
@@ -17,7 +17,7 @@ public class AbstractIngredient {
 
     @Override
     public String toString() {
-        return description;
+        return name;
     }
 
     @Override
@@ -28,14 +28,14 @@ public class AbstractIngredient {
         AbstractIngredient that = (AbstractIngredient) o;
 
         if (Double.compare(that.cost, cost) != 0) return false;
-        return description.equals(that.description);
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        result = description.hashCode();
+        result = name.hashCode();
         temp = Double.doubleToLongBits(cost);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
