@@ -3,6 +3,9 @@ package by.training.nc.dev3;
 import by.training.nc.dev3.beans.beverages.Tea;
 import by.training.nc.dev3.beans.ingredients.Chocolate;
 import by.training.nc.dev3.beans.ingredients.Milk;
+import by.training.nc.dev3.beans.persons.Administrator;
+import by.training.nc.dev3.enums.BeverageType;
+import by.training.nc.dev3.services.AdminService;
 import by.training.nc.dev3.services.BillService;
 import by.training.nc.dev3.services.ClientService;
 import by.training.nc.dev3.beans.coffeeMachine.CoffeeMachine;
@@ -22,6 +25,11 @@ public class CoffeeMachineRunner {
        ClientService clientService=new ClientService(coffeeMachine);
        Latte latte=new Latte();
         Tea tea=new Tea();
+
+        Administrator administrator = new Administrator(coffeeMachine);
+        AdminService adminService = new AdminService();
+        adminService.addBeverage(administrator, BeverageType.LATTE,5);
+        coffeeMachineService.showAssortiment(coffeeMachine);
         Milk milk = new Milk();
         Chocolate chocolate=new Chocolate();
         Client client = new Client();

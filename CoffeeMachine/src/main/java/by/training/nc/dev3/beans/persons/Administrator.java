@@ -8,18 +8,15 @@ import by.training.nc.dev3.fabrics.SimpleFactory;
  */
 public class Administrator {
     CoffeeMachine coffeeMachine;
-    SimpleFactory simpleFactory;
+
 
     public Administrator(CoffeeMachine coffeeMachine) {
         this.coffeeMachine = coffeeMachine;
-        simpleFactory=new SimpleFactory();
     }
 
     public CoffeeMachine getCoffeeMachine() {
         return coffeeMachine;
     }
 
-    public SimpleFactory getSimpleFactory() {
-        return simpleFactory;
-    }
+
 }

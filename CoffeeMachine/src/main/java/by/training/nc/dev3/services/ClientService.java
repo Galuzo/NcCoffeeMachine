@@ -81,5 +81,11 @@ public class ClientService {
         }
     }
 
+    public CoffeeMachine getCoffeeMachine() {
+        return coffeeMachine;
+    }
 
+    public void setCoffeeMachine(CoffeeMachine coffeeMachine) {
+        this.coffeeMachine = coffeeMachine;
+    }
 }
