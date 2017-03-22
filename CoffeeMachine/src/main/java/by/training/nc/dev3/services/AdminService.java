@@ -29,8 +29,9 @@ public class AdminService {
             currentCount+=count;
             beverages.put(beverage, currentCount);
         }
-        else
-            beverages.put(beverage,count);
+        else {
+            beverages.put(beverage, count);
+        }
 
     }
     public void addIngredient(Administrator administrator,IngredientType ingredientType,int count)
@@ -44,7 +45,8 @@ public class AdminService {
             currentCount+=count;
             ingredients.put(ingredient, currentCount);
         }
-        else
-            ingredients.put(ingredient,count);
+        else {
+            ingredients.put(ingredient, count);
+        }
     }
 }

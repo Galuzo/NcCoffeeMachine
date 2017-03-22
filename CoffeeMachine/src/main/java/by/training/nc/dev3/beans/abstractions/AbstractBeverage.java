@@ -23,13 +23,24 @@ public class AbstractBeverage {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
 
         AbstractBeverage that = (AbstractBeverage) o;
 
-        if (Double.compare(that.cost, cost) != 0) return false;
-        if (!name.equals(that.name)) return false;
+        if (Double.compare(that.cost, cost) != 0)
+        {
+            return false;
+        }
+        if (!name.equals(that.name))
+        {
+            return false;
+        }
         return listOfIngredients != null ? listOfIngredients.equals(that.listOfIngredients) : that.listOfIngredients == null;
     }
 
@@ -59,4 +70,5 @@ public class AbstractBeverage {
     public void setCost(double cost) {
         this.cost = cost;
     }
+
 }

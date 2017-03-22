@@ -3,6 +3,7 @@ package by.training.nc.dev3;
 import by.training.nc.dev3.beans.beverages.Tea;
 import by.training.nc.dev3.beans.ingredients.Chocolate;
 import by.training.nc.dev3.beans.ingredients.Milk;
+import by.training.nc.dev3.beans.outputs.Bill;
 import by.training.nc.dev3.beans.persons.Administrator;
 import by.training.nc.dev3.enums.BeverageType;
 import by.training.nc.dev3.services.AdminService;
@@ -27,20 +28,20 @@ public class CoffeeMachineRunner {
 
         Administrator administrator = new Administrator(coffeeMachine);
         AdminService adminService = new AdminService();
-        adminService.addBeverage(administrator, BeverageType.LATTE,5);
+        adminService.addBeverage(administrator, BeverageType.TEA,5);
         coffeeMachineService.showAssortiment(coffeeMachine);
-        Milk milk = new Milk();
-        Chocolate chocolate=new Chocolate();
-        Client client = new Client();
-        clientService.addBeverageInBill(client,latte);
-        clientService.addBeverageInBill(client,tea);
-         clientService.addIngredient(client,tea,milk);
-         clientService.removeIngredientFromBill(client,tea,chocolate);
-       // clientService.addIngredient(client,latte,chocolate);
         BillService billService = new BillService();
-       // clientService.addIngredient(client,tea,milk);
-        billService.showResultBill(client);
-        coffeeMachineService.showAssortiment(coffeeMachine);
+        Tea tea1=new Tea();
+        Client client=new Client();
+        Client client2=new Client();
+        Chocolate chocolate=new Chocolate();
+        clientService.addBeverageInBill(client,tea);
+        clientService.addIngredient(client,tea,chocolate);
+        clientService.addBeverageInBill(client2,latte);
+        clientService.addBeverageInBill(client2,tea1);
+        billService.sortBill(client2);
+        billService.showResultBill(client2);
+        coffeeMachineService.compareBills(client,client2);
 
 
         /*CoffeeMachine machines=new CoffeeMachine();

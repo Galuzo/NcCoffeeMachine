@@ -9,7 +9,7 @@ import by.training.nc.dev3.interfaces.Calculateble;
  * Created by Win on 19.03.2017.
  */
 public class BillCalculator implements Calculateble {
-    public double calculate(Bill bill)
+    public void calculate(Bill bill)
     {
         double resultCost=0;
         for(AbstractBeverage beverage:bill.getBeverages())
@@ -18,7 +18,7 @@ public class BillCalculator implements Calculateble {
             for(AbstractIngredient ingredient:beverage.getListOfIngredients())
                 resultCost+=ingredient.getCost();
         }
-        return resultCost;
+        bill.setGeneralCost(resultCost);
     }
 
 

@@ -23,12 +23,21 @@ public class AbstractIngredient {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
 
         AbstractIngredient that = (AbstractIngredient) o;
 
-        if (Double.compare(that.cost, cost) != 0) return false;
+        if (Double.compare(that.cost, cost) != 0)
+        {
+            return false;
+        }
         return name.equals(that.name);
     }
 
@@ -49,4 +58,6 @@ public class AbstractIngredient {
     public void setCost(double cost) {
         this.cost = cost;
     }
+
+
 }

@@ -44,20 +44,22 @@ public class ClientService {
         List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
         Map<AbstractIngredient,Integer> allIngredients=coffeeMachine.getIngredients();
         Set<AbstractIngredient> currentIngredients=beverage.getListOfIngredients();
-        if(beveragesInBill.contains(beverage))
+        if(beveragesInBill.contains(beverage)) {
             try {
-                Instruments.checkCount(allIngredients,ingredient);
+                Instruments.checkCount(allIngredients, ingredient);
                 currentIngredients.add(ingredient);
-                int currentCount=Instruments.decrementValue(allIngredients,ingredient,1);
+                int currentCount = Instruments.decrementValue(allIngredients, ingredient, 1);
                 allIngredients.put(ingredient, currentCount);
 
             } catch (NotFoundException e) {
-                System.out.println("ERROR:the ingredient was not added ,"+e.getMessage()+e.getElement()+")");
+                System.out.println("ERROR:the ingredient was not added ," + e.getMessage() + e.getElement() + ")");
             } catch (IncorrectValue incorrectValue) {
-                System.out.println("ERROR:the ingredient was not added,it had  ended("+incorrectValue.getElement()+")");
+                System.out.println("ERROR:the ingredient was not added,it had  ended(" + incorrectValue.getElement() + ")");
             }
-       else
+        }
+       else {
             System.out.println("ERROR:The beverage was not found in outputs");
+        }
    }
 
 
@@ -89,8 +91,9 @@ public class ClientService {
             }
             allBeveragesInMachine.put(beverage, value);
         }
-        else
+        else {
             System.out.println("ERROR:The beverage was not found in outputs");
+        }
     }
 
     public void removeIngredientFromBill(Client client,AbstractBeverage beverage,AbstractIngredient ingredient) {
@@ -110,8 +113,9 @@ public class ClientService {
                 }
                 allIngredientsInMachine.put(ingredient, value);
             }
-            else
-                System.out.println("ERROR:ingredient was not found in the beverage");
+            else {
+                System.out.println("ERROR:ingredient was not found in the beverage:" + beverage);
+            }
         }
         else
             System.out.println("ERROR:The beverage was not found in outputs");
