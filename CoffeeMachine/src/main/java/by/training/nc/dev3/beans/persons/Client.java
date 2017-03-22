@@ -7,10 +7,13 @@ import by.training.nc.dev3.beans.bill.Bill;
  */
 public class Client {
     private Bill bill;
+    public static int numberOfEntities = 0;
 
 
     public Client() {
+
         bill=new Bill();
+        numberOfEntities++;
     }
 
 

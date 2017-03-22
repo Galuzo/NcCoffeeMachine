@@ -38,7 +38,6 @@ public class CoffeeMachineRunner {
         clientService.addIngredient(client,tea,chocolate);
         clientService.addIngredient(client,latte,chocolate);
         BillService billService = new BillService();
-        billService.showResultBill(client);
         clientService.addIngredient(client,tea,milk);
         billService.showResultBill(client);
         coffeeMachineService.showAssortiment(coffeeMachine);
