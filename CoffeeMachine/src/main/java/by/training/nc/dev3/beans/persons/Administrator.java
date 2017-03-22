@@ -1,7 +1,6 @@
 package by.training.nc.dev3.beans.persons;
 
-import by.training.nc.dev3.beans.coffeeMachine.CoffeeMachine;
-import by.training.nc.dev3.fabrics.SimpleFactory;
+import by.training.nc.dev3.beans.machines.CoffeeMachine;
 
 /**
  * Created by Win on 18.03.2017.

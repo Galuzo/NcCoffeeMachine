@@ -8,8 +8,7 @@ import by.training.nc.dev3.enums.BeverageType;
 import by.training.nc.dev3.services.AdminService;
 import by.training.nc.dev3.services.BillService;
 import by.training.nc.dev3.services.ClientService;
-import by.training.nc.dev3.beans.coffeeMachine.CoffeeMachine;
-import by.training.nc.dev3.fabrics.SimpleFactory;
+import by.training.nc.dev3.beans.machines.CoffeeMachine;
 import by.training.nc.dev3.beans.beverages.Latte;
 import by.training.nc.dev3.beans.persons.Client;
 import by.training.nc.dev3.services.CoffeeMachineService;
@@ -35,25 +34,26 @@ public class CoffeeMachineRunner {
         Client client = new Client();
         clientService.addBeverageInBill(client,latte);
         clientService.addBeverageInBill(client,tea);
-        clientService.addIngredient(client,tea,chocolate);
-        clientService.addIngredient(client,latte,chocolate);
+         clientService.addIngredient(client,tea,milk);
+         clientService.removeIngredientFromBill(client,tea,chocolate);
+       // clientService.addIngredient(client,latte,chocolate);
         BillService billService = new BillService();
-        clientService.addIngredient(client,tea,milk);
+       // clientService.addIngredient(client,tea,milk);
         billService.showResultBill(client);
         coffeeMachineService.showAssortiment(coffeeMachine);
 
 
-        /*CoffeeMachine coffeeMachine=new CoffeeMachine();
-        coffeeMachine.showAssortiment();
-        Administrator administrator = new Administrator(coffeeMachine);
+        /*CoffeeMachine machines=new CoffeeMachine();
+        machines.showAssortiment();
+        Administrator administrator = new Administrator(machines);
         administrator.addBeverage(BeverageType.LATTE,2);
         administrator.addIngredient(IngredientType.CHOCOLATE);
-        coffeeMachine.showAssortiment();
+        machines.showAssortiment();
         Tea tea=new Tea();
         Latte latte=new Latte();
 
         Chocolate chocolate=new Chocolate();
-        Client client = new Client(coffeeMachine);
+        Client client = new Client(machines);
         client.buyBeverage(tea);
         client.buyBeverage(latte);
         client.addIngredient(latte,chocolate);

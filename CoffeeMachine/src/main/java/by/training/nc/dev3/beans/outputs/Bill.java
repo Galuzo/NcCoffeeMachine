@@ -1,7 +1,6 @@
-package by.training.nc.dev3.beans.bill;
+package by.training.nc.dev3.beans.outputs;
 
-import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
-import by.training.nc.dev3.beans.abstractBeans.AbstractIngredient;
+import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
 
 import java.util.ArrayList;
 import java.util.List;

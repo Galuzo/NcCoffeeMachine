@@ -1,24 +1,24 @@
-package by.training.nc.dev3.beans.abstractBeans;
+package by.training.nc.dev3.beans.abstractions;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Win on 18.03.2017.
  */
-public class AbstractIngredient {
+public class AbstractBeverage {
     protected String name;
     protected double cost;
+    protected Set<AbstractIngredient> listOfIngredients=new HashSet<AbstractIngredient>();
 
     public String getName() {
         return name;
     }
-
     public double getCost() {
         return cost;
     }
-
-    @Override
-    public String toString() {
-        return "name='" + name + '\'' +
-                ", cost=" + cost;
+    public Set<AbstractIngredient> getListOfIngredients() {
+        return listOfIngredients;
     }
 
     @Override
@@ -26,10 +26,11 @@ public class AbstractIngredient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractIngredient that = (AbstractIngredient) o;
+        AbstractBeverage that = (AbstractBeverage) o;
 
         if (Double.compare(that.cost, cost) != 0) return false;
-        return name.equals(that.name);
+        if (!name.equals(that.name)) return false;
+        return listOfIngredients != null ? listOfIngredients.equals(that.listOfIngredients) : that.listOfIngredients == null;
     }
 
     @Override
@@ -39,7 +40,16 @@ public class AbstractIngredient {
         result = name.hashCode();
         temp = Double.doubleToLongBits(cost);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (listOfIngredients != null ? listOfIngredients.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Beverage:"
+                 + name  +
+                " cost=" + cost +
+                ", Ingredients:" + listOfIngredients;
     }
 
     public void setName(String name) {

@@ -1,6 +1,6 @@
 package by.training.nc.dev3.beans.beverages;
 
-import by.training.nc.dev3.beans.abstractBeans.AbstractBeverage;
+import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
 
 /**
  * Created by Win on 19.03.2017.
