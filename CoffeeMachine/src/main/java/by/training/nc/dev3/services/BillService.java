@@ -16,14 +16,21 @@ public class BillService  {
 
     public void showResultBill(Client client)
     {
-        System.out.println("***************Bill***********************");
-        ListIterator<AbstractBeverage> listIter = client.getBill().getBeverages().listIterator();
-        while(listIter.hasNext()){
+        sortBill(client);
+        int index=1;
 
-            System.out.println(listIter.next());
+        ListIterator<AbstractBeverage> listIter = client.getBill().getBeverages().listIterator();
+        if(listIter.hasNext()) {
+            while (listIter.hasNext()) {
+
+                System.out.println(index + ". " + listIter.next());
+                index++;
+            }
+            System.out.println("Current Date: " + client.getBill().getCalendar().getTime());
+            showResultCost(client);
         }
-        System.out.println("Current Date: "+client.getBill().getCalendar().getTime());
-        showResultCost(client);
+        else
+            System.out.println("\tBill is empty");
 
     }
 
@@ -35,7 +42,7 @@ public class BillService  {
         {
            Collections.sort(beverages, beverageComparator);
         }
-        System.out.println("!Bill was sorted");
+
 
     }
 

@@ -1,16 +1,17 @@
 package by.training.nc.dev3.services;
 
 import by.training.nc.dev3.beans.machines.CoffeeMachine;
+import by.training.nc.dev3.enums.BeverageType;
+import by.training.nc.dev3.enums.IngredientType;
 import by.training.nc.dev3.exceptions.IncorrectValue;
 import by.training.nc.dev3.exceptions.NotFoundException;
+import by.training.nc.dev3.fabrics.SimpleFactory;
 import by.training.nc.dev3.instruments.Instruments;
 import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
 import by.training.nc.dev3.beans.abstractions.AbstractIngredient;
 import by.training.nc.dev3.beans.persons.Client;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Win on 21.03.2017.
@@ -23,7 +24,9 @@ public class ClientService {
         this.coffeeMachine=coffeeMachine;
     }
 
-    public void addBeverageInBill(Client client,AbstractBeverage beverage) {
+    public void addBeverageInBill(Client client, BeverageType beverageType) {
+        SimpleFactory simpleFactory=new SimpleFactory();
+        AbstractBeverage beverage=simpleFactory.createBeverage(beverageType);
         Map<AbstractBeverage,Integer> beverages=coffeeMachine.getBeverages();
         List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
         try {
@@ -40,16 +43,27 @@ public class ClientService {
     }
 
 
-   public void addIngredient(Client client,AbstractBeverage beverage, AbstractIngredient ingredient) {
+   public boolean addIngredient(Client client, int numberOfBeverage, IngredientType ingredientType) {
         List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
         Map<AbstractIngredient,Integer> allIngredients=coffeeMachine.getIngredients();
+        AbstractBeverage beverage=getBeverageForEdit(client,--numberOfBeverage);
+        SimpleFactory simpleFactory=new SimpleFactory();
         Set<AbstractIngredient> currentIngredients=beverage.getListOfIngredients();
+        AbstractIngredient ingredient = simpleFactory.createIngredient(ingredientType);
         if(beveragesInBill.contains(beverage)) {
             try {
-                Instruments.checkCount(allIngredients, ingredient);
-                currentIngredients.add(ingredient);
-                int currentCount = Instruments.decrementValue(allIngredients, ingredient, 1);
-                allIngredients.put(ingredient, currentCount);
+                if(!beverage.getListOfIngredients().contains(ingredient)) {
+                    Instruments.checkCount(allIngredients, ingredient);
+                    currentIngredients.add(ingredient);
+                    int currentCount = Instruments.decrementValue(allIngredients, ingredient, 1);
+                    allIngredients.put(ingredient, currentCount);
+                    return true;
+                }
+                else {
+                    System.out.println(ingredientType + " is already consisted");
+                    return false;
+                }
+
 
             } catch (NotFoundException e) {
                 System.out.println("ERROR:the ingredient was not added ," + e.getMessage() + e.getElement() + ")");
@@ -60,13 +74,15 @@ public class ClientService {
        else {
             System.out.println("ERROR:The beverage was not found in outputs");
         }
+        return false;
    }
 
 
-    public void removeBeverageFromBill(Client client,AbstractBeverage beverage) {
+    public void removeBeverageFromBill(Client client,int numberOfBeverage) {
         List<AbstractBeverage> beverages=client.getBill().getBeverages();
         Map<AbstractIngredient,Integer> allIngredientsInMachine=coffeeMachine.getIngredients();
         Map<AbstractBeverage,Integer> allBeveragesInMachine=coffeeMachine.getBeverages();
+        AbstractBeverage beverage=getBeverageForEdit(client,--numberOfBeverage);
         int value=0;
         if(beverages.contains(beverage)) {
             for (AbstractIngredient ingredient : beverage.getListOfIngredients()) {
@@ -96,8 +112,10 @@ public class ClientService {
         }
     }
 
-    public void removeIngredientFromBill(Client client,AbstractBeverage beverage,AbstractIngredient ingredient) {
+    public void removeIngredientFromBill(Client client,int numberOfBeverage,int numberOfIngredient) {
         List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
+        AbstractBeverage beverage=getBeverageForEdit(client,numberOfBeverage);
+        AbstractIngredient ingredient = getIngredientForEdit(client, numberOfBeverage, --numberOfIngredient);
         Map<AbstractIngredient,Integer> allIngredientsInMachine=coffeeMachine.getIngredients();
         int value=0;
         if(beveragesInBill.contains(beverage))
@@ -119,6 +137,19 @@ public class ClientService {
         }
         else
             System.out.println("ERROR:The beverage was not found in outputs");
+    }
+
+    public AbstractBeverage getBeverageForEdit(Client client,int number)
+    {
+        AbstractBeverage beverage=client.getBill().getBeverages().get(number);
+        return beverage;
+    }
+
+    public AbstractIngredient getIngredientForEdit(Client client,int numberOfBeverage,int numberOfIngredient)
+    {
+        List<AbstractIngredient> listOfIngredients = new ArrayList<AbstractIngredient>(client.getBill().getBeverages().get(numberOfBeverage).getListOfIngredients());
+        AbstractIngredient ingredient=listOfIngredients.get(numberOfIngredient);
+        return ingredient;
     }
 
     public CoffeeMachine getCoffeeMachine() {
