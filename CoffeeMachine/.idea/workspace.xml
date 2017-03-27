@@ -2,33 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4143e45b-b6c2-4e40-b6d5-e5c9aeea1fec" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/client" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/coffeeMachine" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/Deserializator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/FileWorker.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/Serializator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/logger" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/CoffeeMachineRunner.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/CoffeeMachineRunner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/abstractions/AbstractBeverage.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/abstractions/AbstractBeverage.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/abstractions/AbstractIngredient.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/abstractions/AbstractIngredient.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/machines/CoffeeMachine.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/machines/CoffeeMachine.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/outputs/Bill.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/outputs/Bill.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/persons/Client.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/beans/persons/Client.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/instruments/InputData.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/instruments/InputData.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/instruments/MenuInitialisation.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/instruments/MenuInitialisation.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/services/BillService.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/services/BillService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/services/ClientService.class" afterPath="$PROJECT_DIR$/target/classes/by/training/nc/dev3/services/ClientService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/client" afterPath="$PROJECT_DIR$/src/main/resources/client" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/CoffeeMachineRunner.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/CoffeeMachineRunner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/abstractions/AbstractBeverage.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/abstractions/AbstractBeverage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/abstractions/AbstractIngredient.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/abstractions/AbstractIngredient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/machines/CoffeeMachine.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/machines/CoffeeMachine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/outputs/Bill.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/outputs/Bill.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/persons/Client.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/persons/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/InputData.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/InputData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/MenuInitialisation.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/MenuInitialisation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/services/BillService.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/services/BillService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/services/ClientService.java" afterPath="$PROJECT_DIR$/src/main/java/by/training/nc/dev3/services/ClientService.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -86,7 +62,7 @@
       <file leaf-file-name="MenuInitialisation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/MenuInitialisation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
+            <state relative-caret-position="6562">
               <caret line="400" column="29" lean-forward="false" selection-start-line="400" selection-start-column="29" selection-end-line="400" selection-end-column="29" />
               <folding />
             </state>
@@ -96,9 +72,12 @@
       <file leaf-file-name="AbstractBeverage.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/abstractions/AbstractBeverage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="26" column="24" lean-forward="true" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
-              <folding />
+            <state relative-caret-position="646">
+              <caret line="44" column="24" lean-forward="true" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
+              <folding>
+                <element signature="e#397#398#0" expanded="true" />
+                <element signature="e#424#425#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -285,6 +264,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -326,6 +308,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -421,9 +407,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -916,11 +899,13 @@
       <workItem from="1490553298978" duration="3823000" />
       <workItem from="1490599253689" duration="4925000" />
       <workItem from="1490625232803" duration="126000" />
+      <workItem from="1490626892913" duration="161000" />
+      <workItem from="1490627086037" duration="30000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116191000" />
+    <option name="totallyTimeSpent" value="116382000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -949,7 +934,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25340393" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26096824" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1199,7 +1184,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
           <caret line="23" column="15" lean-forward="true" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1207,7 +1191,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1223,7 +1206,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="32" column="10" lean-forward="false" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1231,7 +1213,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1375,7 +1356,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/by/training/nc/dev3/instruments/MenuInitialisation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
+        <state relative-caret-position="6562">
           <caret line="400" column="29" lean-forward="false" selection-start-line="400" selection-start-column="29" selection-end-line="400" selection-end-column="29" />
           <folding />
         </state>
@@ -1383,9 +1364,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/by/training/nc/dev3/beans/abstractions/AbstractBeverage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="26" column="24" lean-forward="true" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
-          <folding />
+        <state relative-caret-position="646">
+          <caret line="44" column="24" lean-forward="true" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
+          <folding>
+            <element signature="e#397#398#0" expanded="true" />
+            <element signature="e#424#425#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
