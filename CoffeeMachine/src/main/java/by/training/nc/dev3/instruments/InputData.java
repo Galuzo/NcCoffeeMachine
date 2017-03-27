@@ -20,12 +20,14 @@ public class InputData {
                 }
                 else{
                     System.out.println("number cannot be negative. Try again...");
+                    FileWorker.writeLogger("number cannot be negative. Try again...");
                     continue;
                 }
 
             }
             catch (InputMismatchException e) {
                 System.out.println("Incorrect format. Try again...");
+                FileWorker.writeLogger("Incorrect format. Try again...");
                 continue;
             }
         }

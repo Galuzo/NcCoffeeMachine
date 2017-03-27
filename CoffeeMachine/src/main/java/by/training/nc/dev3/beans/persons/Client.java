@@ -2,10 +2,12 @@ package by.training.nc.dev3.beans.persons;
 
 import by.training.nc.dev3.beans.outputs.Bill;
 
+import java.io.Serializable;
+
 /**
  * Created by Win on 18.03.2017.
  */
-public class Client implements Comparable<Client> {
+public class Client implements Comparable<Client>,Serializable {
     private Bill bill;
     public static int numberOfEntities = 0;
 

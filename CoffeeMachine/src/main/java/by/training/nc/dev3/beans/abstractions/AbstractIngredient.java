@@ -1,9 +1,11 @@
 package by.training.nc.dev3.beans.abstractions;
 
+import java.io.Serializable;
+
 /**
  * Created by Win on 18.03.2017.
  */
-public class AbstractIngredient {
+public class AbstractIngredient implements Serializable {
     protected String name;
     protected double cost;
 

@@ -2,6 +2,7 @@ package by.training.nc.dev3.beans.outputs;
 
 import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by Win on 19.03.2017.
  */
-public class Bill {
+public class Bill implements Serializable{
    private List<AbstractBeverage> beverages = new ArrayList<AbstractBeverage>();
    private double generalCost;
    private GregorianCalendar calendar=new GregorianCalendar();

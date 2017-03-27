@@ -1,12 +1,13 @@
 package by.training.nc.dev3.beans.abstractions;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by Win on 18.03.2017.
  */
-public class AbstractBeverage {
+public class AbstractBeverage implements Serializable{
     protected String name;
     protected double cost;
     protected Set<AbstractIngredient> listOfIngredients=new HashSet<AbstractIngredient>();

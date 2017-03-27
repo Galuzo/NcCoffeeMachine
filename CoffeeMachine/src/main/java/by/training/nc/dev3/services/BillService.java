@@ -3,6 +3,7 @@ package by.training.nc.dev3.services;
 import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
 import by.training.nc.dev3.beans.persons.Client;
 import by.training.nc.dev3.instruments.BeverageComparator;
+import by.training.nc.dev3.instruments.FileWorker;
 import by.training.nc.dev3.interfaces.Calculateble;
 
 import java.util.Collections;
@@ -29,9 +30,10 @@ public class BillService  {
             System.out.println("Current Date: " + client.getBill().getCalendar().getTime());
             showResultCost(client);
         }
-        else
+        else {
             System.out.println("\tBill is empty");
-
+            FileWorker.writeLogger("Bill is empty");
+        }
     }
 
     public void sortBill(Client client)

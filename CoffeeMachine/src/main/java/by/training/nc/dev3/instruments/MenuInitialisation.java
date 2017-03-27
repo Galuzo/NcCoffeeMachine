@@ -11,6 +11,8 @@ import by.training.nc.dev3.services.BillService;
 import by.training.nc.dev3.services.ClientService;
 import by.training.nc.dev3.services.CoffeeMachineService;
 
+import java.io.File;
+import java.io.InvalidObjectException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -20,11 +22,11 @@ import java.util.Scanner;
 public class MenuInitialisation {
     static private Administrator administrator;
     static private Client client;
-    static private CoffeeMachine coffeeMachine=new CoffeeMachine();
-    static private ClientService clientService=new ClientService(coffeeMachine);
-    static private CoffeeMachineService coffeeMachineService=new CoffeeMachineService();
-    static private AdminService adminService=new AdminService();
-    static private BillService billService=new BillService();
+    static private CoffeeMachine coffeeMachine;
+    static private ClientService clientService;
+    static private CoffeeMachineService coffeeMachineService;
+    static private AdminService adminService;
+    static private BillService billService;
     static public void showMenu()
     {
         int input;
@@ -34,6 +36,7 @@ public class MenuInitialisation {
             System.out.println("Select your role:");
             System.out.println("\t1.Administrator");
             System.out.println("\t2.Client");
+            System.out.println("\t3.Exit");
             switch (InputData.inputNumber())
             {
                 case 1:
@@ -66,6 +69,7 @@ public class MenuInitialisation {
                                             else
                                             {
                                                 System.out.println("you are trying to add zero");
+                                                FileWorker.writeLogger("you are trying to add zero");
                                                 continue;
                                             }
                                             break;
@@ -79,6 +83,7 @@ public class MenuInitialisation {
                                             else
                                             {
                                                 System.out.println("you are trying to add zero");
+                                                FileWorker.writeLogger("you are trying to add zero");
                                                 continue;
 
                                             }
@@ -87,6 +92,7 @@ public class MenuInitialisation {
                                             break;
                                         default:
                                             System.out.println("Incorrect input");
+                                            FileWorker.writeLogger("Incorrect input");
                                             continue;
 
                                     }
@@ -113,6 +119,7 @@ public class MenuInitialisation {
                                             else
                                             {
                                                 System.out.println("you are trying to add zero");
+                                                FileWorker.writeLogger("you are trying to add zero");
                                                 continue;
                                             }
                                             break;
@@ -126,6 +133,7 @@ public class MenuInitialisation {
                                             else
                                             {
                                                 System.out.println("you are trying to add zero");
+                                                FileWorker.writeLogger("you are trying to add zero");
                                                 continue;
                                             }
                                             break;
@@ -133,6 +141,7 @@ public class MenuInitialisation {
                                             break;
                                         default:
                                             System.out.println("Incorrect input");
+                                            FileWorker.writeLogger("Incorrect input");
                                             continue;
                                     }
                                     break;
@@ -147,6 +156,7 @@ public class MenuInitialisation {
                                 break;
                             default:
                                 System.out.println("Incorrect input");
+                                FileWorker.writeLogger("Incorrect input");
                                 break;
                         }
                     }while (input!=4);
@@ -155,7 +165,7 @@ public class MenuInitialisation {
 
                 //Client
                 case 2:
-                    client=new Client();
+
                     do{
                         System.out.println("********************Possibility*************************");
                         System.out.println("\t1.Add beverage");
@@ -190,6 +200,7 @@ public class MenuInitialisation {
                                            break;
                                            default:
                                                System.out.println("Incorrect input");
+                                               FileWorker.writeLogger("Incorrect input");
                                                continue;
                                    }
                                    break;
@@ -228,6 +239,7 @@ public class MenuInitialisation {
                                                             break;
                                                         default:
                                                             System.out.println("Incorrect input");
+                                                            FileWorker.writeLogger("Incorrect input");
                                                             continue;
 
 
@@ -235,6 +247,7 @@ public class MenuInitialisation {
                                                     }while (input!=3);
                                                 } else {
                                                     System.out.println("Incorrect number");
+                                                    FileWorker.writeLogger("Incorrect number");
                                                     continue;
                                                 }
 
@@ -262,6 +275,7 @@ public class MenuInitialisation {
 
                                                     } else {
                                                         System.out.println("Incorrect input");
+                                                        FileWorker.writeLogger("Incorrect input");
                                                         continue;
                                                     }
                                                 }
@@ -270,6 +284,7 @@ public class MenuInitialisation {
                                         else
                                         {
                                             System.out.println("bill is empty ");
+                                            FileWorker.writeLogger("bill is empty ");
                                             continue;
                                         }
 
@@ -278,6 +293,7 @@ public class MenuInitialisation {
                                 else
                                 {
                                     System.out.println("Bill is empty");
+                                    FileWorker.writeLogger("Bill is empty");
                                 }
                                 break;
                             case 4:
@@ -312,18 +328,21 @@ public class MenuInitialisation {
                                                                 break;
                                                             } else {
                                                                 System.out.println("Incorrect input of ingredient");
+                                                                FileWorker.writeLogger("Incorrect input of ingredient");
                                                                 continue;
                                                             }
                                                         }
                                                         }while (input!=0);
                                                     } else {
                                                         System.out.println("The ingredients is absent");
+                                                        FileWorker.writeLogger("The ingredients is absent");
                                                         break;
                                                     }
 
 
                                             } else {
                                                 System.out.println("Incorrect input of beverage");
+                                                FileWorker.writeLogger("Incorrect input of beverage");
                                                 continue;
                                             }
                                         }
@@ -332,6 +351,7 @@ public class MenuInitialisation {
                                 else
                                 {
                                     System.out.println("Bill is empty");
+                                    FileWorker.writeLogger("Bill is empty");
                                 }
                                 break;
                             case 5:
@@ -345,16 +365,45 @@ public class MenuInitialisation {
                                 break;
                                 default:
                                     System.out.println("Incorrect input ");
+                                    FileWorker.writeLogger("Incorrect input ");
                                     continue;
 
                         }
 
 
                     }while (input!=7);
+                    break;
+                case 3:
+                    Serializator.serialization(client,"src"+ File.separator+"main"+File.separator+"resources"+File.separator+"client");
+                    Serializator.serialization(coffeeMachine,"src"+ File.separator+"main"+File.separator+"resources"+File.separator+"coffeeMachine");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Incorrect input");
+                    FileWorker.writeLogger("Incorrect input");
+                    break;
 
 
             }
         }
+    }
+
+    static public void Initialiaze()
+    {
+        try {
+            client = (Client)Deserializator.deserialization("src" + File.separator + "main" + File.separator + "resources" + File.separator + "client");
+        } catch (InvalidObjectException e) {
+            client=new Client();
+        }
+        try {
+            coffeeMachine = (CoffeeMachine) Deserializator.deserialization("src" + File.separator + "main" + File.separator + "resources" + File.separator + "coffeeMachine");
+        } catch (InvalidObjectException e) {
+            coffeeMachine=new CoffeeMachine();
+        }
+        clientService=new ClientService(coffeeMachine);
+        coffeeMachineService=new CoffeeMachineService();
+        adminService=new AdminService();
+        billService=new BillService();
     }
 
 

@@ -6,10 +6,12 @@ import by.training.nc.dev3.enums.IngredientType;
 import by.training.nc.dev3.exceptions.IncorrectValue;
 import by.training.nc.dev3.exceptions.NotFoundException;
 import by.training.nc.dev3.fabrics.SimpleFactory;
+import by.training.nc.dev3.instruments.FileWorker;
 import by.training.nc.dev3.instruments.Instruments;
 import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
 import by.training.nc.dev3.beans.abstractions.AbstractIngredient;
 import by.training.nc.dev3.beans.persons.Client;
+import sun.text.resources.iw.FormatData_iw_IL;
 
 import java.util.*;
 
@@ -37,8 +39,10 @@ public class ClientService {
 
         } catch (NotFoundException e) {
             System.out.println("ERROR:the beverage was not added ,"+e.getMessage()+e.getElement()+")");
+            FileWorker.writeLogger("ERROR:the beverage was not added ,"+e.getMessage()+e.getElement()+")");
         } catch (IncorrectValue incorrectValue) {
             System.out.println("ERROR:the beverage was not added,it had  ended("+incorrectValue.getElement()+")");
+            FileWorker.writeLogger("ERROR:the beverage was not added,it had  ended("+incorrectValue.getElement()+")");
         }
     }
 
@@ -61,18 +65,20 @@ public class ClientService {
                 }
                 else {
                     System.out.println(ingredientType + " is already consisted");
+                    FileWorker.writeLogger(ingredientType + " is already consisted");
                     return false;
                 }
-
-
             } catch (NotFoundException e) {
                 System.out.println("ERROR:the ingredient was not added ," + e.getMessage() + e.getElement() + ")");
+                FileWorker.writeLogger("ERROR:the ingredient was not added ," + e.getMessage() + e.getElement() + ")");
             } catch (IncorrectValue incorrectValue) {
                 System.out.println("ERROR:the ingredient was not added,it had  ended(" + incorrectValue.getElement() + ")");
+                FileWorker.writeLogger("ERROR:the ingredient was not added,it had  ended(" + incorrectValue.getElement() + ")");
             }
         }
        else {
             System.out.println("ERROR:The beverage was not found in outputs");
+            FileWorker.writeLogger("ERROR:The beverage was not found in outputs");
         }
         return false;
    }
@@ -90,8 +96,10 @@ public class ClientService {
                     value = Instruments.incrementValue(allIngredientsInMachine, ingredient, 1);
                 } catch (NotFoundException e) {
                     System.out.println("ERROR:the ingredient was not removed from list Of ingredients ,"+e.getMessage()+e.getElement()+")");
+                    FileWorker.writeLogger("ERROR:the ingredient was not removed from list Of ingredients ,"+e.getMessage()+e.getElement()+")");
                 } catch (IncorrectValue incorrectValue) {
                     System.out.println("ERROR:the ingredient was not removed,the value is incorrect("+incorrectValue.getElement()+")");
+                    FileWorker.writeLogger("ERROR:the ingredient was not removed,the value is incorrect("+incorrectValue.getElement()+")");
                 }
                 allIngredientsInMachine.put(ingredient, value);
             }
@@ -102,13 +110,16 @@ public class ClientService {
                 value = Instruments.incrementValue(allBeveragesInMachine, beverage, 1);
             } catch (NotFoundException e) {
                 System.out.println("ERROR:the beverage was not removed ,"+e.getMessage()+e.getElement()+")");
+                FileWorker.writeLogger("ERROR:the beverage was not removed ,"+e.getMessage()+e.getElement()+")");
             } catch (IncorrectValue incorrectValue) {
                 System.out.println("ERROR:the beverage was not removed,the value is incorrect("+incorrectValue.getElement()+")");
+                FileWorker.writeLogger("ERROR:the beverage was not removed,the value is incorrect("+incorrectValue.getElement()+")");
             }
             allBeveragesInMachine.put(beverage, value);
         }
         else {
             System.out.println("ERROR:The beverage was not found in outputs");
+            FileWorker.writeLogger("ERROR:The beverage was not found in outputs");
         }
     }
 
@@ -126,17 +137,22 @@ public class ClientService {
                     value = Instruments.incrementValue(allIngredientsInMachine, ingredient, 1);
                 } catch (NotFoundException e) {
                     System.out.println("ERROR:the ingredient was not removed ," + e.getMessage() + e.getElement() + ")");
+                    FileWorker.writeLogger("ERROR:the ingredient was not removed ," + e.getMessage() + e.getElement() + ")");
                 } catch (IncorrectValue incorrectValue) {
                     System.out.println("ERROR:the beverage was not removed,the value is incorrect(" + incorrectValue.getElement() + ")");
+                    FileWorker.writeLogger("ERROR:the beverage was not removed,the value is incorrect(" + incorrectValue.getElement() + ")");
                 }
                 allIngredientsInMachine.put(ingredient, value);
             }
             else {
                 System.out.println("ERROR:ingredient was not found in the beverage:" + beverage);
+                FileWorker.writeLogger("ERROR:ingredient was not found in the beverage:" + beverage);
             }
         }
-        else
+        else {
             System.out.println("ERROR:The beverage was not found in outputs");
+            FileWorker.writeLogger("ERROR:The beverage was not found in outputs");
+        }
     }
 
     public AbstractBeverage getBeverageForEdit(Client client,int number)
