@@ -1,5 +1,6 @@
 package by.training.nc.dev3.instruments;
 
+import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
 import by.training.nc.dev3.beans.abstractions.AbstractIngredient;
 import by.training.nc.dev3.beans.machines.CoffeeMachine;
 import by.training.nc.dev3.beans.persons.Administrator;
@@ -34,11 +35,22 @@ public class MenuInitialisation {
         {
             System.out.println("********************Menu*************************");
             System.out.println("Select your role:");
+            System.out.println("\t0.Sort 100 tea and 100 latte");
             System.out.println("\t1.Administrator");
             System.out.println("\t2.Client");
             System.out.println("\t3.Exit");
             switch (InputData.inputNumber())
             {
+                case 0:
+                    for(int i=0;i<100;i++)
+                    {
+                        clientService.addBeverageInBill(client,BeverageType.LATTE);
+                        clientService.addBeverageInBill(client,BeverageType.TEA.TEA);
+                    }
+                    //здесь сортирует и сразу же выводит на экран в сортированном виде
+                    //сначала отображаются напитки с меньшей стоимостью
+                    billService.showResultBill(client);
+                    break;
                 case 1:
                     //Administrator
                     administrator = new Administrator(coffeeMachine);

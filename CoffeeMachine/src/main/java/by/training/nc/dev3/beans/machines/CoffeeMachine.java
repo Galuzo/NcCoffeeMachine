@@ -26,8 +26,8 @@ public class CoffeeMachine implements Serializable {
         Chocolate chocolate=new Chocolate();
         ingredients.put(milk,5);
         ingredients.put(chocolate, 5);
-        beverages.put(latte, 5);
-        beverages.put(tea,5);
+        beverages.put(latte, 200);
+        beverages.put(tea,200);
     }
 
     public Map<AbstractIngredient, Integer> getIngredients() {
