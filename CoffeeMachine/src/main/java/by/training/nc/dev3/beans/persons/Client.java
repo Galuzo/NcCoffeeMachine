@@ -9,11 +9,13 @@ import java.io.Serializable;
  */
 public class Client implements Comparable<Client>,Serializable {
     private Bill bill;
+    private double countOfMoney;
     public static int numberOfEntities = 0;
 
 
     public Client() {
         bill=new Bill();
+        countOfMoney=500;
         numberOfEntities++;
     }
 
@@ -30,6 +32,14 @@ public class Client implements Comparable<Client>,Serializable {
         {
             return 0;
         }
+    }
+
+    public double getCountOfMoney() {
+        return countOfMoney;
+    }
+
+    public void setCountOfMoney(double countOfMoney) {
+        this.countOfMoney = countOfMoney;
     }
 
     public Bill getBill() {

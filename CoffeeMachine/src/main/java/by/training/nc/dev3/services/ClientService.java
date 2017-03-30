@@ -168,6 +168,8 @@ public class ClientService {
         return ingredient;
     }
 
+
+
     public CoffeeMachine getCoffeeMachine() {
         return coffeeMachine;
     }
@@ -175,4 +177,5 @@ public class ClientService {
     public void setCoffeeMachine(CoffeeMachine coffeeMachine) {
         this.coffeeMachine = coffeeMachine;
     }
+
 }

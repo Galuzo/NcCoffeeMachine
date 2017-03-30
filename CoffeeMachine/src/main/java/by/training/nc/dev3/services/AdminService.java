@@ -26,8 +26,26 @@ public class AdminService {
         if(beverages.containsKey(beverage))
         {
             int currentCount = beverages.get(beverage);
-            currentCount+=count;
-            beverages.put(beverage, currentCount);
+            if(currentCount<administrator.getCoffeeMachine().getLimitOfPlace())
+            {
+                int difference=administrator.getCoffeeMachine().getLimitOfPlace()-currentCount;
+                if(count>difference)
+                {
+                    currentCount+=difference;
+                    System.out.println("You added "+difference+" "+beverageType);
+
+                }
+                else
+                {
+                    currentCount+=count;
+                    System.out.println("You added "+count+" "+beverageType);
+                }
+                beverages.put(beverage, currentCount);
+            }
+            else
+            {
+                System.out.println("The  limit was reached");
+            }
         }
         else {
             beverages.put(beverage, count);
@@ -42,11 +60,31 @@ public class AdminService {
         if(ingredients.containsKey(ingredient))
         {
             int currentCount = ingredients.get(ingredient);
-            currentCount+=count;
-            ingredients.put(ingredient, currentCount);
+            if(currentCount<administrator.getCoffeeMachine().getLimitOfPlace())
+            {
+                int difference=administrator.getCoffeeMachine().getLimitOfPlace()-currentCount;
+                if(count>difference)
+                {
+                    currentCount+=difference;
+                    System.out.println("You  added "+difference+" "+ingredientType);
+
+                }
+                else
+                {
+                    currentCount+=count;
+                    System.out.println("You added "+count+" "+ingredientType);
+                }
+                ingredients.put(ingredient, currentCount);
+            }
+            else
+            {
+                System.out.println("The limit was reached");
+            }
         }
         else {
             ingredients.put(ingredient, count);
         }
     }
+
+
 }

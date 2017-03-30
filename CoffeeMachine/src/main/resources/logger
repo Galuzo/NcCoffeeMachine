@@ -42,3 +42,12 @@ Incorrect input: Mon Mar 27 11:05:49 MSK 2017
 The ingredients is absent: Mon Mar 27 11:37:56 MSK 2017
 Incorrect input: Wed Mar 29 21:03:40 MSK 2017
 Bill is empty: Wed Mar 29 21:09:11 MSK 2017
+Bill is empty: Thu Mar 30 10:16:24 MSK 2017
+Incorrect format. Try again...: Thu Mar 30 10:35:49 MSK 2017
+number cannot be negative. Try again...: Thu Mar 30 10:35:52 MSK 2017
+Incorrect format. Try again...: Thu Mar 30 10:35:56 MSK 2017
+number cannot be negative. Try again...: Thu Mar 30 10:36:25 MSK 2017
+you are trying to add zero: Thu Mar 30 10:36:27 MSK 2017
+Bill is empty: Thu Mar 30 10:40:16 MSK 2017
+MILK is already consisted: Thu Mar 30 10:42:54 MSK 2017
+Incorrect input: Thu Mar 30 21:46:36 MSK 2017

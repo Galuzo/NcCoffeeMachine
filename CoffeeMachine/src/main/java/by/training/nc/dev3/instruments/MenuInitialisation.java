@@ -35,22 +35,11 @@ public class MenuInitialisation {
         {
             System.out.println("********************Menu*************************");
             System.out.println("Select your role:");
-            System.out.println("\t0.Sort 100 tea and 100 latte");
             System.out.println("\t1.Administrator");
             System.out.println("\t2.Client");
             System.out.println("\t3.Exit");
             switch (InputData.inputNumber())
             {
-                case 0:
-                    for(int i=0;i<100;i++)
-                    {
-                        clientService.addBeverageInBill(client,BeverageType.LATTE);
-                        clientService.addBeverageInBill(client,BeverageType.TEA.TEA);
-                    }
-                    //здесь сортирует и сразу же выводит на экран в сортированном виде
-                    //сначала отображаются напитки с меньшей стоимостью
-                    billService.showResultBill(client);
-                    break;
                 case 1:
                     //Administrator
                     administrator = new Administrator(coffeeMachine);
@@ -76,7 +65,6 @@ public class MenuInitialisation {
                                             int count = InputData.inputNumber();
                                             if(count!=0) {
                                                 adminService.addBeverage(administrator, BeverageType.LATTE, count);
-                                                System.out.println(BeverageType.LATTE + " was added");
                                             }
                                             else
                                             {
@@ -90,7 +78,6 @@ public class MenuInitialisation {
                                             count = InputData.inputNumber();
                                             if(count!=0) {
                                                 adminService.addBeverage(administrator, BeverageType.TEA, count);
-                                                System.out.println(BeverageType.TEA + " was added");
                                             }
                                             else
                                             {
@@ -126,7 +113,7 @@ public class MenuInitialisation {
                                             int count = InputData.inputNumber();
                                             if(count!=0) {
                                                 adminService.addIngredient(administrator, IngredientType.MILK, count);
-                                                System.out.println(IngredientType.MILK + " was added");
+
                                             }
                                             else
                                             {
@@ -140,7 +127,6 @@ public class MenuInitialisation {
                                             count = InputData.inputNumber();
                                             if(count!=0) {
                                                 adminService.addIngredient(administrator, IngredientType.CHOCOLATE, count);
-                                                System.out.println(IngredientType.CHOCOLATE + " was added");
                                             }
                                             else
                                             {
@@ -180,10 +166,10 @@ public class MenuInitialisation {
 
                     do{
                         System.out.println("********************Possibility*************************");
-                        System.out.println("\t1.Add beverage");
-                        System.out.println("\t2.Add ingredient");
-                        System.out.println("\t3.remove beverage");
-                        System.out.println("\t4.remove ingredient");
+                        System.out.println("\t1.Add beverage in the bill");
+                        System.out.println("\t2.Add ingredient in the bill");
+                        System.out.println("\t3.remove beverage from the bill");
+                        System.out.println("\t4.remove ingredient from the beverage");
                         System.out.println("\t5.Show assortiment");
                         System.out.println("\t6.Show Bill");
                         System.out.println("\t7.Back in the last menu");
