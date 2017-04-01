@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<LINK rel="stylesheet" media="screen" type="text/css" title="Style" href="css/style.css">
+<script type="text/javascript">
+	function valid(form)
+	{
+		var regularName=/^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/;
+		var regularPassword=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/;
+
+
+		var name=form.name.value;
+		var password=form.password.value;
+		if(!regularName.test(name)){
+			document.getElementById('errorName').innerHTML = "Incorrect name";
+		
+		
+		}
+		else if(!regularPassword.test(password))
+		{
+			document.getElementById('errorPassword').innerHTML = "Incorrect password";
+		}
+		else
+		{
+			document.getElementById('errorName').innerHTML = "success";
+		}
+	}
+</script>
+<title>CoffeeTime</title>
+</head>
+<body>
+	<div id="status-bar">
+		<div id="status-bar-content">
+			<form action="#search" method="post" id="search-form">
+				<p>
+					<input type="text" name="query" placeholder="search" />
+					<input type="submit" name="submit" value="Search!" />
+				</p>
+			</form>
+			<div id="status-bar-commands">
+				<p id="welcome">Добро Пожаловать,гость</p>
+				<p id="action-bar">
+					<a id='login' href="#login "  title="Login">Вход</a>
+					<a href="#sitemap" title="Sitemap">О нас</a>
+					<a href="license.html" title="License">Лицензия</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<h1><a href="#home" title="Home Page">Coffee</a></h1>
+				<h2>Time</h2>
+			</div>
+		</div>
+
+        <div id="navigation">
+            <ul id="tabs">
+                <li id="home" class="current">
+                    <a href="index.html" title="Home">Главная</a>		</li>
+                <li id="menu">
+                    <a href="#menu" title="menu">Меню</a>		</li>
+                <li id="reviews">
+                    <a href="#reviews" title="reviews">Отзывы</a>		</li>
+                <li id="promotions">
+                    <a href="#promotions" title="promotions">Акции</a>		</li>
+            </ul>
+       </div>
+	</div>
+ 
+	<div id="content-top-shadow"></div>
+	<div class="content">
+		<form class="sign-up" id="form">
+    		<h1 class="sign-up-title">Sign in </h1>
+    		<label id="errorName" class="error"></label>
+    		<input type="text" name="name" class="sign-up-input" placeholder="What's your username?" autofocus>
+    		<label id="errorPassword" class="error"></label>
+    		<input type="password" name="password" class="sign-up-input" placeholder="Enter your password">
+    		<input type="button" value="Sign me in!" onclick="valid(document.getElementById('form'))"  class="sign-up-button">
+  		</form>
+	</div>
+</body>
+
+<div id="content-bottom-shadow"></div>
+
+<div id="footer">
+	<div id="footer-image"></div>
+	<p id="footer-text"> 
+		Copyright © 2017 Coffee Time<br /> All Rights Reserved
+	</p>
+
+</div>
+</html>
+
