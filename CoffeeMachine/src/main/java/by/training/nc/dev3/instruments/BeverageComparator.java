@@ -1,7 +1,6 @@
 package by.training.nc.dev3.instruments;
 
-import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
-import by.training.nc.dev3.beans.abstractions.AbstractIngredient;
+import by.training.nc.dev3.beans.content.AbstractBeverage;
 
 import java.util.Comparator;
 

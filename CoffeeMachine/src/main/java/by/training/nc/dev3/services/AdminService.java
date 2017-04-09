@@ -1,7 +1,7 @@
 package by.training.nc.dev3.services;
 
-import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
-import by.training.nc.dev3.beans.abstractions.AbstractIngredient;
+import by.training.nc.dev3.beans.content.AbstractBeverage;
+import by.training.nc.dev3.beans.content.AbstractIngredient;
 import by.training.nc.dev3.beans.persons.Administrator;
 import by.training.nc.dev3.enums.BeverageType;
 import by.training.nc.dev3.enums.IngredientType;
@@ -13,15 +13,11 @@ import java.util.Map;
  * Created by Win on 21.03.2017.
  */
 public class AdminService {
-    SimpleFactory simpleFactory;
-    public  AdminService()
-    {
-       simpleFactory=new SimpleFactory();
-    }
+
     public void addBeverage(Administrator administrator,BeverageType beverageType, int count)
     {
         AbstractBeverage beverage;
-        beverage=simpleFactory.createBeverage(beverageType);
+        beverage=SimpleFactory.createBeverage(beverageType);
         Map<AbstractBeverage,Integer> beverages=administrator.getCoffeeMachine().getBeverages();
         if(beverages.containsKey(beverage))
         {
@@ -55,7 +51,7 @@ public class AdminService {
     public void addIngredient(Administrator administrator,IngredientType ingredientType,int count)
     {
         AbstractIngredient ingredient;
-        ingredient=simpleFactory.createIngredient(ingredientType);
+        ingredient=SimpleFactory.createIngredient(ingredientType);
         Map<AbstractIngredient,Integer> ingredients=administrator.getCoffeeMachine().getIngredients();
         if(ingredients.containsKey(ingredient))
         {

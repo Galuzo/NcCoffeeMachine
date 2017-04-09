@@ -66,9 +66,9 @@ form#search-form input[type="text"]
 	margin-top:3px;
 	background: url(../img/search-field.png) no-repeat;
 	border:none;
-	height:20px;
+	height:25px;
 	padding: 2px 0px 0px 30px;
-	width:170px;
+	width:200px;
 }
 
 form#search-form input[type="submit"] 
@@ -141,7 +141,7 @@ div#main{
 }
 
 
-                                                                     /*Content*/
+                                                                     /*content*/
 div.content 
 {
 	margin: auto;

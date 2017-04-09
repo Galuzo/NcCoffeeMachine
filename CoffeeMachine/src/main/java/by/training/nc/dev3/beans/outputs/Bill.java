@@ -1,10 +1,9 @@
 package by.training.nc.dev3.beans.outputs;
 
-import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
+import by.training.nc.dev3.beans.content.AbstractBeverage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 

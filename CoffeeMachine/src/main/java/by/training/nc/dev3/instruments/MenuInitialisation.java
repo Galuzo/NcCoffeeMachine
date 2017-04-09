@@ -1,7 +1,6 @@
 package by.training.nc.dev3.instruments;
 
-import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
-import by.training.nc.dev3.beans.abstractions.AbstractIngredient;
+import by.training.nc.dev3.beans.content.AbstractIngredient;
 import by.training.nc.dev3.beans.machines.CoffeeMachine;
 import by.training.nc.dev3.beans.persons.Administrator;
 import by.training.nc.dev3.beans.persons.Client;
@@ -14,8 +13,6 @@ import by.training.nc.dev3.services.CoffeeMachineService;
 
 import java.io.File;
 import java.io.InvalidObjectException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * Created by Win on 25.03.2017.

@@ -1,6 +1,6 @@
 package by.training.nc.dev3.services;
 
-import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
+import by.training.nc.dev3.beans.content.AbstractBeverage;
 import by.training.nc.dev3.beans.persons.Client;
 import by.training.nc.dev3.instruments.BeverageComparator;
 import by.training.nc.dev3.instruments.FileWorker;

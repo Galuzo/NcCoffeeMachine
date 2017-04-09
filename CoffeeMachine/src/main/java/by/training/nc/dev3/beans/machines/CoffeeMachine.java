@@ -1,15 +1,11 @@
 package by.training.nc.dev3.beans.machines;
 
-import by.training.nc.dev3.beans.abstractions.AbstractBeverage;
-import by.training.nc.dev3.beans.abstractions.AbstractIngredient;
-import by.training.nc.dev3.beans.beverages.Latte;
-import by.training.nc.dev3.beans.beverages.Tea;
-import by.training.nc.dev3.beans.ingredients.Chocolate;
-import by.training.nc.dev3.beans.ingredients.Milk;
+import by.training.nc.dev3.beans.content.AbstractBeverage;
+import by.training.nc.dev3.beans.content.AbstractIngredient;
 import by.training.nc.dev3.enums.BeverageType;
 import by.training.nc.dev3.enums.IngredientType;
 import by.training.nc.dev3.fabrics.SimpleFactory;
-import com.sun.org.apache.xalan.internal.xsltc.dom.SAXImpl;
+
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -25,11 +21,11 @@ public class CoffeeMachine implements Serializable {
 
     public CoffeeMachine()
     {
-        SimpleFactory simpleFactory=new SimpleFactory();
-        AbstractBeverage tea=simpleFactory.createBeverage(BeverageType.TEA);
-        AbstractBeverage latte=simpleFactory.createBeverage(BeverageType.LATTE);
-        AbstractIngredient milk=simpleFactory.createIngredient(IngredientType.MILK);
-        AbstractIngredient chocolate=simpleFactory.createIngredient(IngredientType.CHOCOLATE);
+
+        AbstractBeverage latte=SimpleFactory.createBeverage(BeverageType.LATTE);
+        AbstractBeverage tea = SimpleFactory.createBeverage(BeverageType.TEA);
+        AbstractIngredient milk = SimpleFactory.createIngredient(IngredientType.MILK);
+        AbstractIngredient chocolate = SimpleFactory.createIngredient(IngredientType.CHOCOLATE);
         ingredients.put(milk,5);
         ingredients.put(chocolate, 5);
         beverages.put(latte, 10);
