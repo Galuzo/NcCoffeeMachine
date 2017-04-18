@@ -1,180 +1,162 @@
 package by.training.nc.dev3.services;
 
-import by.training.nc.dev3.beans.machines.CoffeeMachine;
-import by.training.nc.dev3.enums.BeverageType;
-import by.training.nc.dev3.enums.IngredientType;
-import by.training.nc.dev3.exceptions.IncorrectValue;
-import by.training.nc.dev3.exceptions.NotFoundException;
-import by.training.nc.dev3.fabrics.SimpleFactory;
-import by.training.nc.dev3.instruments.FileWorker;
+import by.training.nc.dev3.beans.ContentInBill;
+import by.training.nc.dev3.beans.Bill;
+import by.training.nc.dev3.beans.Content;
+import by.training.nc.dev3.beans.User;
+import by.training.nc.dev3.dao.GenericDao;
+import by.training.nc.dev3.dao.implementations.BillDaoImpl;
+import by.training.nc.dev3.dao.implementations.ContentInBillDaoImpl;
+import by.training.nc.dev3.dao.implementations.IngredientDaoImpl;
+import by.training.nc.dev3.dao.implementations.commons.ContentDaoImpl;
+import by.training.nc.dev3.enums.ContentType;
+import by.training.nc.dev3.exceptions.DaoException;
+import by.training.nc.dev3.instruments.BillWorkHelper;
+import by.training.nc.dev3.instruments.ContentWorkHelper;
 import by.training.nc.dev3.instruments.Instruments;
-import by.training.nc.dev3.beans.content.AbstractBeverage;
-import by.training.nc.dev3.beans.content.AbstractIngredient;
-import by.training.nc.dev3.beans.persons.Client;
+import com.sun.org.apache.xpath.internal.SourceTree;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by Win on 21.03.2017.
  */
 public class ClientService {
-    private CoffeeMachine coffeeMachine;
 
-    public  ClientService(CoffeeMachine coffeeMachine)
-    {
-        this.coffeeMachine=coffeeMachine;
+    public ClientService() {
     }
 
-    public void addBeverageInBill(Client client, BeverageType beverageType) {
-        SimpleFactory simpleFactory=new SimpleFactory();
-        AbstractBeverage beverage=simpleFactory.createBeverage(beverageType);
-        Map<AbstractBeverage,Integer> beverages=coffeeMachine.getBeverages();
-        List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
+    public void addBeverageInBill(User user, int id) {
+        ContentDaoImpl contentDao = ContentWorkHelper.generateContentDao(ContentType.BEVERAGE);
+        ContentInBillDaoImpl contentInBillDao = new ContentInBillDaoImpl();
+        BillDaoImpl billDao = new BillDaoImpl();
         try {
-            Instruments.checkCount(beverages,beverage);
-            beveragesInBill.add(beverage);
-                int currentCount=Instruments.decrementValue(beverages,beverage,1);
-                beverages.put(beverage, currentCount);
+            Content beverageInMachine = contentDao.getByPK(id);
+            if (beverageInMachine.getCount() > 0) {
+                Bill bill = billDao.getByUser(user.getId());
+                List<ContentInBill> beverageInBill = contentInBillDao.getByBillAndBeverage(bill.getId(), id);
+                if (beverageInBill != null) {
+                    ContentInBill emptyBeverage = BillWorkHelper.incrementEmptyBeverage(beverageInBill, 0);
+                    int currentValue = beverageInMachine.getCount();
+                    beverageInMachine.setCount(Instruments.decrementValue(currentValue, 1));
+                    if (emptyBeverage != null) {
+                        contentInBillDao.update(emptyBeverage);
+                    } else {
+                        ContentInBill newContein = new ContentInBill(0, bill.getId(), id, 0, 1);
+                        contentInBillDao.persist(newContein);
+                    }
+                    contentDao.update(beverageInMachine);
 
-        } catch (NotFoundException e) {
-            System.out.println("ERROR:the beverage was not added ,"+e.getMessage()+e.getElement()+")");
-            FileWorker.writeLogger("ERROR:the beverage was not added ,"+e.getMessage()+e.getElement()+")");
-        } catch (IncorrectValue incorrectValue) {
-            System.out.println("ERROR:the beverage was not added,it had  ended("+incorrectValue.getElement()+")");
-            FileWorker.writeLogger("ERROR:the beverage was not added,it had  ended("+incorrectValue.getElement()+")");
+                }
+            }
+        } catch (DaoException e) {
+            System.out.println("The element was not found ");
         }
     }
 
 
-   public boolean addIngredient(Client client, int numberOfBeverage, IngredientType ingredientType) {
-        List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
-        Map<AbstractIngredient,Integer> allIngredients=coffeeMachine.getIngredients();
-        AbstractBeverage beverage=getBeverageForEdit(client,--numberOfBeverage);
-        SimpleFactory simpleFactory=new SimpleFactory();
-        Set<AbstractIngredient> currentIngredients=beverage.getListOfIngredients();
-        AbstractIngredient ingredient = simpleFactory.createIngredient(ingredientType);
-        if(beveragesInBill.contains(beverage)) {
-            try {
-                if(!beverage.getListOfIngredients().contains(ingredient)) {
-                    Instruments.checkCount(allIngredients, ingredient);
-                    currentIngredients.add(ingredient);
-                    int currentCount = Instruments.decrementValue(allIngredients, ingredient, 1);
-                    allIngredients.put(ingredient, currentCount);
-                    return true;
-                }
-                else {
-                    System.out.println(ingredientType + " is already consisted");
-                    FileWorker.writeLogger(ingredientType + " is already consisted");
-                    return false;
-                }
-            } catch (NotFoundException e) {
-                System.out.println("ERROR:the ingredient was not added ," + e.getMessage() + e.getElement() + ")");
-                FileWorker.writeLogger("ERROR:the ingredient was not added ," + e.getMessage() + e.getElement() + ")");
-            } catch (IncorrectValue incorrectValue) {
-                System.out.println("ERROR:the ingredient was not added,it had  ended(" + incorrectValue.getElement() + ")");
-                FileWorker.writeLogger("ERROR:the ingredient was not added,it had  ended(" + incorrectValue.getElement() + ")");
-            }
-        }
-       else {
-            System.out.println("ERROR:The beverage was not found in outputs");
-            FileWorker.writeLogger("ERROR:The beverage was not found in outputs");
-        }
-        return false;
-   }
+    public void addIngredient(User user, int idBeverage, int idIngredient) {
+        ContentDaoImpl contentDao = new IngredientDaoImpl();
+        ContentInBillDaoImpl contentInBillDao = new ContentInBillDaoImpl();
+        BillDaoImpl billDao = new BillDaoImpl();
 
-
-    public void removeBeverageFromBill(Client client,int numberOfBeverage) {
-        List<AbstractBeverage> beverages=client.getBill().getBeverages();
-        Map<AbstractIngredient,Integer> allIngredientsInMachine=coffeeMachine.getIngredients();
-        Map<AbstractBeverage,Integer> allBeveragesInMachine=coffeeMachine.getBeverages();
-        AbstractBeverage beverage=getBeverageForEdit(client,--numberOfBeverage);
-        int value=0;
-        if(beverages.contains(beverage)) {
-            for (AbstractIngredient ingredient : beverage.getListOfIngredients()) {
-                try {
-                    value = Instruments.incrementValue(allIngredientsInMachine, ingredient, 1);
-                } catch (NotFoundException e) {
-                    System.out.println("ERROR:the ingredient was not removed from list Of ingredients ,"+e.getMessage()+e.getElement()+")");
-                    FileWorker.writeLogger("ERROR:the ingredient was not removed from list Of ingredients ,"+e.getMessage()+e.getElement()+")");
-                } catch (IncorrectValue incorrectValue) {
-                    System.out.println("ERROR:the ingredient was not removed,the value is incorrect("+incorrectValue.getElement()+")");
-                    FileWorker.writeLogger("ERROR:the ingredient was not removed,the value is incorrect("+incorrectValue.getElement()+")");
-                }
-                allIngredientsInMachine.put(ingredient, value);
-            }
-            Set<AbstractIngredient> ingredientSet = beverage.getListOfIngredients();
-            ingredientSet.clear();
-            beverages.remove(beverage);
+        Content ingredientInMachine = ContentWorkHelper.checkRecord(ContentType.INGREDIENT, idIngredient);
+        if (ingredientInMachine != null && ingredientInMachine.getCount() > 0) {
+            Bill bill = null;
             try {
-                value = Instruments.incrementValue(allBeveragesInMachine, beverage, 1);
-            } catch (NotFoundException e) {
-                System.out.println("ERROR:the beverage was not removed ,"+e.getMessage()+e.getElement()+")");
-                FileWorker.writeLogger("ERROR:the beverage was not removed ,"+e.getMessage()+e.getElement()+")");
-            } catch (IncorrectValue incorrectValue) {
-                System.out.println("ERROR:the beverage was not removed,the value is incorrect("+incorrectValue.getElement()+")");
-                FileWorker.writeLogger("ERROR:the beverage was not removed,the value is incorrect("+incorrectValue.getElement()+")");
+                bill = billDao.getByUser(user.getId());
+                List<ContentInBill> beverageInBill = contentInBillDao.getByBillAndBeverage(bill.getId(), idBeverage);
+                ContentInBill importantBeverages = BillWorkHelper.getBeverageWithIngredient(beverageInBill, idIngredient);
+                ingredientInMachine.setCount(Instruments.decrementValue(ingredientInMachine.getCount(), 1));
+                if (importantBeverages != null) {
+                    importantBeverages.setBeverageCount(Instruments.incrementValue(importantBeverages.getBeverageCount(), 1));
+                } else {
+                    importantBeverages = BillWorkHelper.getBeverageWithIngredient(beverageInBill, 0);
+                    importantBeverages.setBeverageCount(Instruments.decrementValue(importantBeverages.getBeverageCount(), 1));
+                    ContentInBill newBeverage = new ContentInBill(0, bill.getId(), idBeverage, idIngredient, 1);
+                    contentInBillDao.persist(newBeverage);
+
+                }
+                contentInBillDao.update(importantBeverages);
+                contentDao.update(ingredientInMachine);
+
+            } catch (DaoException e) {
+                System.out.println("The element was not found ");
             }
-            allBeveragesInMachine.put(beverage, value);
+        } else {
+            System.out.println("The ingredient is absent");
         }
-        else {
-            System.out.println("ERROR:The beverage was not found in outputs");
-            FileWorker.writeLogger("ERROR:The beverage was not found in outputs");
-        }
+
     }
 
-    public void removeIngredientFromBill(Client client,int numberOfBeverage,int numberOfIngredient) {
-        List<AbstractBeverage> beveragesInBill=client.getBill().getBeverages();
-        AbstractBeverage beverage=getBeverageForEdit(client,numberOfBeverage);
-        AbstractIngredient ingredient = getIngredientForEdit(client, numberOfBeverage, --numberOfIngredient);
-        Map<AbstractIngredient,Integer> allIngredientsInMachine=coffeeMachine.getIngredients();
-        int value=0;
-        if(beveragesInBill.contains(beverage))
-        {
-            if(beverage.getListOfIngredients().contains(ingredient)) {
-                beverage.getListOfIngredients().remove(ingredient);
-                try {
-                    value = Instruments.incrementValue(allIngredientsInMachine, ingredient, 1);
-                } catch (NotFoundException e) {
-                    System.out.println("ERROR:the ingredient was not removed ," + e.getMessage() + e.getElement() + ")");
-                    FileWorker.writeLogger("ERROR:the ingredient was not removed ," + e.getMessage() + e.getElement() + ")");
-                } catch (IncorrectValue incorrectValue) {
-                    System.out.println("ERROR:the beverage was not removed,the value is incorrect(" + incorrectValue.getElement() + ")");
-                    FileWorker.writeLogger("ERROR:the beverage was not removed,the value is incorrect(" + incorrectValue.getElement() + ")");
-                }
-                allIngredientsInMachine.put(ingredient, value);
+
+    public void removeBeverageFromBill(User user, int idBeverage) {
+        ContentInBillDaoImpl contentInBillDao = new ContentInBillDaoImpl();
+        BillDaoImpl billDao = new BillDaoImpl();
+        ContentDaoImpl beverageDao = ContentWorkHelper.generateContentDao(ContentType.BEVERAGE);
+        ContentDaoImpl ingredientDao = ContentWorkHelper.generateContentDao(ContentType.INGREDIENT);
+
+        try {
+            Bill bill = billDao.getByUser(user.getId());
+            ContentInBill beverageInBill = contentInBillDao.getByPK(idBeverage);
+            if(beverageInBill.getIdBill()==bill.getId()) {
+                Content commonBeverage = beverageDao.getByPK(beverageInBill.getIdBeverage());
+                Content commonIngredient = ingredientDao.getByPK(beverageInBill.getIdIngredient());
+                commonBeverage.setCount(Instruments.incrementValue(commonBeverage.getCount(), beverageInBill.getBeverageCount()));
+                commonIngredient.setCount(Instruments.incrementValue(commonIngredient.getCount(), beverageInBill.getBeverageCount()));
+                contentInBillDao.delete(beverageInBill);
+                ingredientDao.update(commonIngredient);
+                beverageDao.update(commonBeverage);
             }
             else {
-                System.out.println("ERROR:ingredient was not found in the beverage:" + beverage);
-                FileWorker.writeLogger("ERROR:ingredient was not found in the beverage:" + beverage);
+
+                System.out.println("The bill doesn't have this beverage");
             }
+
+        } catch (DaoException e) {
+            System.out.println("Error remove beverage" + e);
         }
-        else {
-            System.out.println("ERROR:The beverage was not found in outputs");
-            FileWorker.writeLogger("ERROR:The beverage was not found in outputs");
+
+
+    }
+
+    public void removeIngredientFromBill(User user,int idBeverage,int idIngredient) {
+        ContentInBillDaoImpl contentInBillDao = new ContentInBillDaoImpl();
+        BillDaoImpl billDao = new BillDaoImpl();
+        ContentDaoImpl ingredientDao = ContentWorkHelper.generateContentDao(ContentType.INGREDIENT);
+
+        try {
+            Bill bill = billDao.getByUser(user.getId());
+            ContentInBill beverageInBill = contentInBillDao.getByPK(idBeverage);
+            if(beverageInBill.getIdBill()==bill.getId()) {
+                if (beverageInBill.getIdIngredient() == idIngredient) {
+                    Content commonIngredient = ingredientDao.getByPK(idIngredient);
+                    commonIngredient.setCount(Instruments.incrementValue(commonIngredient.getCount(),1));
+                    beverageInBill.setBeverageCount(Instruments.decrementValue(beverageInBill.getBeverageCount(),1));
+                    if(beverageInBill.getBeverageCount()>0)
+                    {
+                        contentInBillDao.update(beverageInBill);
+                    }
+                    else {
+                        contentInBillDao.delete(beverageInBill);
+                    }
+                    ingredientDao.update(commonIngredient);
+
+                } else {
+                    System.out.println("The beverage doesn't have this ingredient");
+
+                }
+            }
+            else{
+
+                    System.out.println("The bill doesn't have this beverage");
+                }
+
+        } catch (DaoException e) {
+            System.out.println("Error remove beverage" + e);
         }
+
     }
-
-    public AbstractBeverage getBeverageForEdit(Client client,int number)
-    {
-        AbstractBeverage beverage=client.getBill().getBeverages().get(number);
-        return beverage;
-    }
-
-    public AbstractIngredient getIngredientForEdit(Client client,int numberOfBeverage,int numberOfIngredient)
-    {
-        List<AbstractIngredient> listOfIngredients = new ArrayList<AbstractIngredient>(client.getBill().getBeverages().get(numberOfBeverage).getListOfIngredients());
-        AbstractIngredient ingredient=listOfIngredients.get(numberOfIngredient);
-        return ingredient;
-    }
-
-
-
-    public CoffeeMachine getCoffeeMachine() {
-        return coffeeMachine;
-    }
-
-    public void setCoffeeMachine(CoffeeMachine coffeeMachine) {
-        this.coffeeMachine = coffeeMachine;
-    }
-
 }
+
+

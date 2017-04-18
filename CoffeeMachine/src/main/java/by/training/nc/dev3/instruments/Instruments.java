@@ -1,71 +1,64 @@
 package by.training.nc.dev3.instruments;
 
-import by.training.nc.dev3.exceptions.IncorrectValue;
-import by.training.nc.dev3.exceptions.NotFoundException;
+import by.training.nc.dev3.beans.ContentInBill;
 
-import java.util.Map;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Win on 20.03.2017.
  */
 public class Instruments {
 
-    public static boolean checkAvailability(Map collection,Object object)
-    {
-        if(collection.containsKey(object)) {
-            return true;
+
+
+
+    public static ContentInBill findIngredientInBeverage(List<ContentInBill> contentInBills, int idIngredient) {
+        for(ContentInBill contentInBill : contentInBills) {
+            if (contentInBill.getIdIngredient() == idIngredient) {
+                return contentInBill;
+            }
         }
-        else {
-            return false;
-        }
+        return null;
     }
 
-    public static int checkCount(Map collection,Object object) throws NotFoundException {
-        if(checkAvailability(collection,object)) {
-            return (Integer) collection.get(object);
-        }
-        else {
-            throw new NotFoundException("Element not found in machines(", object);
-        }
-
-    }
-
-    public static int decrementValue (Map collection,Object object,int value) throws NotFoundException,IncorrectValue
-    {
-        int currentValue= 0;
+   /* public static List<ContentInBill> parseResult(ResultSet resultSet) {
+        long instanceId;
+        long instanceIdBill;
+        long instanceIdBeverage;
+        long instanceIdIngredient;
+        int instanceBeverageCount;
+        List<ContentInBill> list = new ArrayList<ContentInBill>();
         try {
-            currentValue = checkCount(collection,object);
-        } catch (NotFoundException e) {
-            throw  new NotFoundException(e.getMessage(),e.getElement());
+            while (resultSet.next()) {
+                instanceId = resultSet.getLong("id");
+                instanceIdBill=resultSet.getLong("idBill");
+                instanceIdBeverage = resultSet.getLong("idBeverage");
+                instanceIdIngredient = resultSet.getLong("idIngredient");
+                instanceBeverageCount = resultSet.getInt("beverageCount");
+                ContentInBill contentInBill = new ContentInBill(instanceId,instanceIdBill,instanceIdBeverage,instanceIdIngredient,instanceBeverageCount);
+                list.add(contentInBill);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        if(currentValue>0) {
-            currentValue-=value;
-            return currentValue;
-        }
-        else {
-            throw new IncorrectValue("Incorrect value", object);
-        }
+        return list;
 
+    }*/
+
+    public static int incrementValue(int value,int count) {
+       return value+count;
+    }
+    public static int decrementValue(int value,int count) {
+        value = value - count;
+        if (value < 0)
+        {
+            value=0;
+        }
+        return value;
     }
 
-    public static int incrementValue(Map collection,Object object,int value) throws NotFoundException,IncorrectValue
-    {
-        int currentValue= 0;
-        try {
-            currentValue = checkCount(collection,object);
 
-        } catch (NotFoundException e) {
-            throw  new NotFoundException(e.getMessage(),e.getElement());
-        }
-        if(currentValue>=0) {
-            currentValue+=value;
-            return currentValue;
-        }
-        else {
-            throw new IncorrectValue("Incorrect value", object);
-        }
-
-
-
-    }
 }

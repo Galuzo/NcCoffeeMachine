@@ -1,86 +1,57 @@
 package by.training.nc.dev3.services;
 
-import by.training.nc.dev3.beans.content.AbstractBeverage;
-import by.training.nc.dev3.beans.content.AbstractIngredient;
-import by.training.nc.dev3.beans.persons.Administrator;
-import by.training.nc.dev3.enums.BeverageType;
-import by.training.nc.dev3.enums.IngredientType;
-import by.training.nc.dev3.fabrics.SimpleFactory;
+import by.training.nc.dev3.beans.Content;
 
-import java.util.Map;
+import by.training.nc.dev3.dao.GenericDao;
+import by.training.nc.dev3.dao.implementations.BeverageDaoImpl;
+import by.training.nc.dev3.dao.implementations.IngredientDaoImpl;
+import by.training.nc.dev3.dao.implementations.commons.ContentDaoImpl;
+import by.training.nc.dev3.enums.ContentType;
+import by.training.nc.dev3.exceptions.DaoException;
+import by.training.nc.dev3.exceptions.NotFoundException;
+import by.training.nc.dev3.instruments.ContentWorkHelper;
+import by.training.nc.dev3.instruments.Instruments;
 
 /**
  * Created by Win on 21.03.2017.
  */
 public class AdminService {
+   private final int LIMIT=100;
 
-    public void addBeverage(Administrator administrator,BeverageType beverageType, int count)
-    {
-        AbstractBeverage beverage;
-        beverage=SimpleFactory.createBeverage(beverageType);
-        Map<AbstractBeverage,Integer> beverages=administrator.getCoffeeMachine().getBeverages();
-        if(beverages.containsKey(beverage))
-        {
-            int currentCount = beverages.get(beverage);
-            if(currentCount<administrator.getCoffeeMachine().getLimitOfPlace())
-            {
-                int difference=administrator.getCoffeeMachine().getLimitOfPlace()-currentCount;
-                if(count>difference)
-                {
-                    currentCount+=difference;
-                    System.out.println("You added "+difference+" "+beverageType);
-
+    public void addExistContent(ContentType contentType,int id, int count) {
+        GenericDao genericDao = ContentWorkHelper.generateContentDao(contentType);
+        Content content = ContentWorkHelper.checkRecord(contentType, id);
+        if (content != null && count>0) {
+            int oldValue = content.getCount();
+            int valueForAdd = ContentWorkHelper.checkLimit(oldValue, count, LIMIT);
+            if (valueForAdd > 0) {
+                content.setCount(Instruments.incrementValue(oldValue, valueForAdd));
+                try {
+                    genericDao.update(content);
+                    System.out.println("You added " +valueForAdd+" "+ content.getTitle());
+                } catch (DaoException e) {
+                    System.out.println("Error of update " + content);
                 }
-                else
-                {
-                    currentCount+=count;
-                    System.out.println("You added "+count+" "+beverageType);
-                }
-                beverages.put(beverage, currentCount);
-            }
-            else
-            {
-                System.out.println("The  limit was reached");
-            }
-        }
-        else {
-            beverages.put(beverage, count);
-        }
-
-    }
-    public void addIngredient(Administrator administrator,IngredientType ingredientType,int count)
-    {
-        AbstractIngredient ingredient;
-        ingredient=SimpleFactory.createIngredient(ingredientType);
-        Map<AbstractIngredient,Integer> ingredients=administrator.getCoffeeMachine().getIngredients();
-        if(ingredients.containsKey(ingredient))
-        {
-            int currentCount = ingredients.get(ingredient);
-            if(currentCount<administrator.getCoffeeMachine().getLimitOfPlace())
-            {
-                int difference=administrator.getCoffeeMachine().getLimitOfPlace()-currentCount;
-                if(count>difference)
-                {
-                    currentCount+=difference;
-                    System.out.println("You  added "+difference+" "+ingredientType);
-
-                }
-                else
-                {
-                    currentCount+=count;
-                    System.out.println("You added "+count+" "+ingredientType);
-                }
-                ingredients.put(ingredient, currentCount);
-            }
-            else
-            {
+            } else
                 System.out.println("The limit was reached");
-            }
-        }
-        else {
-            ingredients.put(ingredient, count);
+        } else {
+            System.out.println("The element was not found or count<0");
         }
     }
 
+    public void addNewContent(ContentType contentType,String title,double cost,int count) {
+        ContentDaoImpl genericDao = ContentWorkHelper.generateContentDao(contentType);
+        Content content = ContentWorkHelper.checkRecord(contentType, title);
+        if (content == null) {
+            content = new Content(0, title, cost, count);
+            try {
+                genericDao.persist(content);
+            } catch (DaoException e) {
+                System.out.println("Error creating " + title);
+            }
+        } else {
+            System.out.println("The " + title + " is already consists");
+        }
 
+    }
 }

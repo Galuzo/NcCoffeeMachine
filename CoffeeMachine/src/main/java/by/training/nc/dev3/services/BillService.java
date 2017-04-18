@@ -1,60 +1,58 @@
 package by.training.nc.dev3.services;
 
-import by.training.nc.dev3.beans.content.AbstractBeverage;
-import by.training.nc.dev3.beans.persons.Client;
-import by.training.nc.dev3.instruments.BeverageComparator;
-import by.training.nc.dev3.instruments.FileWorker;
-import by.training.nc.dev3.interfaces.Calculateble;
+import by.training.nc.dev3.beans.ContentInBill;
+import by.training.nc.dev3.beans.Bill;
+import by.training.nc.dev3.beans.Content;
+import by.training.nc.dev3.beans.User;
+import by.training.nc.dev3.dao.GenericDao;
+import by.training.nc.dev3.dao.implementations.BeverageDaoImpl;
+import by.training.nc.dev3.dao.implementations.BillDaoImpl;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
+import by.training.nc.dev3.dao.implementations.ContentInBillDaoImpl;
+import by.training.nc.dev3.dao.implementations.IngredientDaoImpl;
+import by.training.nc.dev3.dao.implementations.commons.ContentDaoImpl;
+import by.training.nc.dev3.enums.ContentType;
+import by.training.nc.dev3.exceptions.DaoException;
+import by.training.nc.dev3.instruments.ContentWorkHelper;
+
+import java.util.*;
 
 /**
  * Created by Win on 21.03.2017.
  */
-public class BillService  {
+public class BillService {
 
-    public void showResultBill(Client client)
-    {
-        sortBill(client);
-        int index=1;
+    public void showResultBill(User user) {
+        ContentInBillDaoImpl contentInBillDao = new ContentInBillDaoImpl();
+        GenericDao billDao = new BillDaoImpl();
+        ContentDaoImpl ingredientDao = new IngredientDaoImpl();
+        ContentDaoImpl beverageDao = new BeverageDaoImpl();
+        double generalCost = 0;
+        try {
+            Bill bill = (Bill) billDao.getByPK(user.getId());
+            List<ContentInBill> billWithId = contentInBillDao.getByBill(bill.getId());
+            for (ContentInBill i : billWithId) {
+                Content beverage = beverageDao.getByPK(i.getIdBeverage());
+                if (i.getIdIngredient() != 0) {
+                    Content ingredient = ingredientDao.getByPK(i.getIdIngredient());
+                    System.out.println(i.getId() + ". " + beverage.getTitle() + " cost:" + beverage.getCost() + " {ingredient:" + ingredient.getTitle() + " cost:" + ingredient.getCost() + "}" + " count:" + i.getBeverageCount());
+                    generalCost += beverage.getCost() * i.getBeverageCount();
+                    generalCost += ingredient.getCost() * i.getBeverageCount();
+                } else {
 
-        ListIterator<AbstractBeverage> listIter = client.getBill().getBeverages().listIterator();
-        if(listIter.hasNext()) {
-            while (listIter.hasNext()) {
+                    System.out.println(i.getId() + ". " + beverage.getTitle() + " cost:" + beverage.getCost() + " count:" + i.getBeverageCount());
+                    generalCost += beverage.getCost() * i.getBeverageCount();
+                }
 
-                System.out.println(index + ". " + listIter.next());
-                index++;
             }
-            System.out.println("Current Date: " + client.getBill().getCalendar().getTime());
-            showResultCost(client);
-        }
-        else {
-            System.out.println("\tBill is empty");
-            FileWorker.writeLogger("Bill is empty");
-        }
-    }
-
-    public void sortBill(Client client)
-    {
-        List<AbstractBeverage> beverages=client.getBill().getBeverages();
-        BeverageComparator beverageComparator=new BeverageComparator();
-        if(!beverages.isEmpty())
-        {
-           Collections.sort(beverages, beverageComparator);
+            bill.setDate(new GregorianCalendar().getTime());
+            bill.setGeneralCost(generalCost);
+            billDao.update(bill);
+            System.out.println("Current Date: " + bill.getDate());
+            System.out.println("General cost:: " + bill.getGeneralCost());
+        } catch (DaoException e) {
+            System.out.println("Error showResult" + e);
         }
 
-
-    }
-
-
-
-
-    private void showResultCost(Client client)
-    {
-        Calculateble billCalculator=new BillCalculator();
-        billCalculator.calculate(client.getBill());
-        System.out.format("ResultCost=%.4f\n",client.getBill().getGeneralCost());
     }
 }
