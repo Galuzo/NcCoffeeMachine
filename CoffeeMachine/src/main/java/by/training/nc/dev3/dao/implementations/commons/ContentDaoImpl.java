@@ -19,8 +19,8 @@ public abstract class ContentDaoImpl extends GenericDaoImpl<Content> {
             statement.setString(1,object.getTitle());
             statement.setDouble(2,object.getCost());
             statement.setInt(3,object.getCount());
-        } catch (SQLException e) {
-            throw new DaoException("Error creating prepare statement for insert",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
     }
 
@@ -30,9 +30,10 @@ public abstract class ContentDaoImpl extends GenericDaoImpl<Content> {
             statement.setDouble(2,object.getCost());
             statement.setInt(3,object.getCount());
             statement.setLong(4,object.getId());
-        } catch (SQLException e) {
-            throw new DaoException("Error creating prepare statement for uprate",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
+
     }
     protected List<Content> parseResultSet(ResultSet rs) throws DaoException {
         LinkedList<Content> result = new LinkedList<Content>();
@@ -45,16 +46,17 @@ public abstract class ContentDaoImpl extends GenericDaoImpl<Content> {
                 ingredient.setCount(rs.getInt("count"));
                 result.add(ingredient);
             }
-        } catch (SQLException e) {
-            throw new DaoException("Error parsing result",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
         return result;
     }
 
     public  Content getByTitle(String title)throws DaoException{
         Content beverage=null;
+        Connection connection=null;
         try {
-            Connection connection= ConnectionPool.getConnection();
+             connection= ConnectionPool.getConnection();
             String sql=getSelectByTitle();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,title);
@@ -62,8 +64,15 @@ public abstract class ContentDaoImpl extends GenericDaoImpl<Content> {
             if(resultSet.next()){
                  beverage = new Content(resultSet.getInt("id"), resultSet.getString("title"), resultSet.getDouble("cost"), resultSet.getInt("count"));
             }
-        } catch (SQLException e ) {
-            throw new DaoException("Element not found", e);
+            else
+            {
+                throw new DaoException("Record with title = " + title + " not found.");
+            }
+        } catch (Exception e ) {
+            throw new DaoException(e);
+        }
+        finally {
+            ConnectionPool.closeConnection(connection);
         }
         return beverage;
     }

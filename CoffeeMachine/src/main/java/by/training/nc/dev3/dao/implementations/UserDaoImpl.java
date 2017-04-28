@@ -27,11 +27,11 @@ public class UserDaoImpl extends GenericDaoImpl<User> {
     }
 
     public String getUpdateQuery() {
-        return "UPDATE users SET login=? , password=? , idRole=? WHERE idUser=?";
+        return "UPDATE users SET login=? , password=? , idRole=? WHERE id=?";
     }
 
     public String getDeleteQuery() {
-        return "DELETE FROM users WHERE idUser=?";
+        return "DELETE FROM users WHERE id=?";
     }
 
     protected List<User> parseResultSet(ResultSet rs) throws DaoException {
@@ -39,15 +39,16 @@ public class UserDaoImpl extends GenericDaoImpl<User> {
         try {
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("idUser"));
+                user.setId(rs.getInt("id"));
                 user.setLogin(rs.getString("login"));
                 user.setPassword(rs.getString("password"));
-                user.setIdRoles(rs.getLong("IdRole"));
+                user.setIdRoles(rs.getInt("IdRole"));
                 result.add(user);
             }
-        } catch (SQLException e) {
-            throw new DaoException("Error parsing result",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
+
         return result;
     }
 
@@ -56,8 +57,8 @@ public class UserDaoImpl extends GenericDaoImpl<User> {
             statement.setString(1,object.getLogin());
             statement.setString(2,object.getPassword());
             statement.setLong(3,object.getIdRoles());
-        } catch (SQLException e) {
-            throw new DaoException("Error creating prepare statement for insert",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
     }
 
@@ -74,17 +75,26 @@ public class UserDaoImpl extends GenericDaoImpl<User> {
 
     public User getByName(String login)throws DaoException{
         User user=null;
+        Connection connection = null;
         try {
-            Connection connection= ConnectionPool.getConnection();
+             connection= ConnectionPool.getConnection();
             String sql = "SELECT * FROM users WHERE login=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,login);
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()){
-                user = new User(resultSet.getInt("idUser"),resultSet.getString("login"), resultSet.getString("password"), resultSet.getInt("idRole"));
+                user = new User(resultSet.getInt("id"),resultSet.getString("login"), resultSet.getString("password"), resultSet.getInt("idRole"));
             }
-        } catch (SQLException e ) {
-            throw new DaoException("User not found", e);
+            else
+            {
+                throw new DaoException("Record with login = " + login + " not found.");
+
+            }
+        } catch (Exception e ) {
+            throw new DaoException(e);
+        }
+        finally {
+            ConnectionPool.closeConnection(connection);
         }
         return user;
     }

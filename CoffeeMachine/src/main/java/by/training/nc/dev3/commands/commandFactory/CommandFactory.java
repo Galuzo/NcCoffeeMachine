@@ -1,7 +1,8 @@
 package by.training.nc.dev3.commands.commandFactory;
 
 import by.training.nc.dev3.commands.Command;
-import by.training.nc.dev3.commands.user.GoToLogin;
+import by.training.nc.dev3.commands.user.GoTOLoginCommand;
+import by.training.nc.dev3.commands.user.LoginCommand;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,10 +20,10 @@ public enum CommandFactory {
             command = type.getCommand();
         }
         catch(NullPointerException e){
-            command = new GoToLogin();
+            command = new GoTOLoginCommand();
         }
         catch(IllegalArgumentException e){
-            command = new GoToLogin();
+            command = new GoTOLoginCommand();
         }
         return command;
     }

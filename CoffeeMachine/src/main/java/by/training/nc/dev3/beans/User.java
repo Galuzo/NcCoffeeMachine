@@ -8,10 +8,10 @@ import by.training.nc.dev3.beans.Entity;
 public class User extends Entity {
     private String login;
     private String password;
-    private long idRoles;
+    private int idRoles;
 
     public User(){}
-    public User(int id, String login, String password, long idRoles) {
+    public User(int id, String login, String password, int idRoles) {
         super(id);
         this.login = login;
         this.password = password;
@@ -34,11 +34,11 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public long getIdRoles() {
+    public int getIdRoles() {
         return idRoles;
     }
 
-    public void setIdRoles(long idRoles) {
+    public void setIdRoles(int idRoles) {
         this.idRoles = idRoles;
     }
 

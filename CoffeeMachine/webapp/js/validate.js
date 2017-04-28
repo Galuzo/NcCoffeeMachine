@@ -1,3 +1,5 @@
+
+
 function validSignIn(form)
         {
             var regularName=/^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/;
@@ -8,21 +10,17 @@ function validSignIn(form)
             var password=form.password.value;
             if(!regularName.test(name)){
                 document.getElementById('errorName').innerHTML = "Incorrect name";
-
+                return false;
 
             }
             else if(!regularPassword.test(password))
             {
                 document.getElementById('errorPassword').innerHTML = "Incorrect password";
+                return false;
             }
             else
             {
-                var xhr = new XMLHttpRequest();
-                var body ='command=login'+'&'+'name=' + encodeURIComponent(name) +
-                    '&password=' + encodeURIComponent(password);
-                xhr.open("POST", '/controller', true)
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-                xhr.send(body);
+                return true;
             }
         }
 
@@ -41,30 +39,29 @@ function validSignUp(form)
     var error;
     if(!regularName.test(name)){
         document.getElementById('errorName').innerHTML = "Incorrect name";
+        return false;
 
     }
     else if(!regularEmail.test(email))
     {
         document.getElementById('errorEmail').innerHTML = "Incorrect email";
         document.getElementById('errorName').innerHTML = " ";
+        return false;
     }
     else if(!regularPassword.test(password))
     {
         document.getElementById('errorPassword').innerHTML = "Incorrect password";
         document.getElementById('errorEmail').innerHTML = " ";
+        return false;
     }
     else if(password!=rePassword)
     {
         document.getElementById('errorRePassword').innerHTML = "passwords don't match";
         document.getElementById('errorPassword').innerHTML = " ";
+        return false;
     }
     else{
-        var xhr = new XMLHttpRequest();
-        var body ='command=registration'+'&'+'name=' + encodeURIComponent(name) +'&email'+email+
-            '&password=' + encodeURIComponent(password);
-        xhr.open("POST", '/controller', true)
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-        xhr.send(body);
+        return true;
     }
 
 }

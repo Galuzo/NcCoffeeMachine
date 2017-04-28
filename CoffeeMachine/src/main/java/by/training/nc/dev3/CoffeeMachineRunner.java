@@ -23,11 +23,11 @@ public class CoffeeMachineRunner {
    // clientService.addBeverageInBill(user,1);
     coffeeMachineService.showAssortiment();
    // clientService.addIngredient(user,1,1);
-    billService.showResultBill(user);
+    //billService.showResultBill(user);
     //clientService.addIngredient(user,1,1);
    // clientService.addBeverageInBill(user,3);
-    clientService.removeIngredientFromBill(user,4,1);
-    billService.showResultBill(user);
+    //clientService.removeIngredientFromBill(user,4,1);
+   // billService.showResultBill(user);
     //clientService.removeBeverageFromBill(user,2);
 
    //clientService.addIngredient(user,1,1);

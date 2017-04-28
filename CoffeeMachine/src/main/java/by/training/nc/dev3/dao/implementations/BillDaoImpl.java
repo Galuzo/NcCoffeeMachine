@@ -6,10 +6,7 @@ import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.dao.implementations.commons.GenericDaoImpl;
 import by.training.nc.dev3.exceptions.DaoException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class BillDaoImpl extends GenericDaoImpl<Bill> {
     }
 
     public String getCreateQuery() {
-        return "INSERT INTO bills (idUsers,generalCost,date) values(?,?,?)";
+        return "INSERT INTO bills (idUser,generalCost,date) values(?,?,?)";
     }
 
     public String getUpdateQuery() {
@@ -45,7 +42,7 @@ public class BillDaoImpl extends GenericDaoImpl<Bill> {
                 result.add(bill);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error parsing result",e);
+            throw new DaoException(e);
         }
         return result;
     }
@@ -55,8 +52,8 @@ public class BillDaoImpl extends GenericDaoImpl<Bill> {
             statement.setLong(1,object.getIdUsers());
             statement.setDouble(2,object.getGeneralCost());
             statement.setObject(3,object.getDate());
-        } catch (SQLException e) {
-            throw new DaoException("Error creating prepare statement for insert",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
     }
 
@@ -66,15 +63,16 @@ public class BillDaoImpl extends GenericDaoImpl<Bill> {
             statement.setDouble(2,object.getGeneralCost());
             statement.setObject(3,object.getDate());
             statement.setLong(4,object.getId());
-        } catch (SQLException e) {
-            throw new DaoException("Error creating prepare statement for uprate",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
     }
 
     public Bill getByUser(int id)throws DaoException{
         Bill bill=null;
+        Connection connection = null;
         try {
-            Connection connection= ConnectionPool.getConnection();
+             connection= ConnectionPool.getConnection();
             String sql="SELECT * FROM bills WHERE idUser=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1,id);
@@ -82,8 +80,15 @@ public class BillDaoImpl extends GenericDaoImpl<Bill> {
             if(resultSet.next()){
                 bill = new Bill(resultSet.getInt("id"), resultSet.getInt("idUser"), resultSet.getDouble("generalCost"), resultSet.getDate("date"));
             }
-        } catch (SQLException e ) {
-            return null;
+            else
+            {
+                throw new DaoException("Record with PK = " + id + " not found.");
+            }
+        } catch (Exception e ) {
+            throw new DaoException(e);
+        }
+        finally {
+            ConnectionPool.closeConnection(connection);
         }
         return bill;
     }

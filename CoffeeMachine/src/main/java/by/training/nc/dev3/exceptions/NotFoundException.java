@@ -4,14 +4,17 @@ package by.training.nc.dev3.exceptions;
  * Created by Win on 22.03.2017.
  */
 public class NotFoundException extends Exception {
-    Object element;
-    public NotFoundException(String message, Object element)
+    public NotFoundException(String message, Throwable e )
     {
-        super(message);
-        this.element=element;
+        super(message,e);
+
     }
 
-    public Object getElement() {
-        return element;
+    public NotFoundException(String message) {
+        super(message);
+    }
+
+    public NotFoundException(Throwable e) {
+        super(e);
     }
 }

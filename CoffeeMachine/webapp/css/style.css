@@ -170,26 +170,7 @@ div#content-bottom-shadow
 	margin-left:50px;
 }
 
-div#border 	
-{
-	margin-left:40px;
-	padding-bottom:50px;
-	background: url('../img/gtaV.png') no-repeat;
-	padding:250px 48px;
-	padding-bottom:20px;
-	border: 5px solid #7acbec;
-	border-radius:25px;
-}
-div#border1 	
-{
-	margin-left:40px;
-	padding-bottom:50px;
-	background: url(../img/dying-light.png) no-repeat;
-	padding:250px 48px;
-	padding-bottom:20px;
-	border: 5px solid #7acbec;
-	border-radius:25px;
-}
+
 
 div#border p
 {
@@ -351,6 +332,60 @@ input {
 {
 	color:red;
 	font-size: 16px;
+}
+
+
+TD, TH {
+	padding: 3px; /* Поля вокруг содержимого таблицы */
+	border: 1px solid black; /* Параметры рамки */
+}
+TH {
+	background: #b0e0e6; /* Цвет фона */
+}
+h3#role{
+	margin-bottom:30px;
+}
+h1#h1_center
+{
+	text-align: center;
+}
+
+table {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	border-collapse: collapse;
+	margin-bottom:30px;
+	color: #686461;
+	width:800px;
+}
+caption {
+	padding: 10px;
+	text-align: center;
+	color: white;
+	background: #8FD4C1;
+	font-size: 18px;
+	font-weight: bold;
+}
+th {
+	border-bottom: 3px solid #B9B29F;
+	padding: 10px;
+	text-align: left;
+}
+td {
+	padding: 10px;
+}
+tr:nth-child(odd) {
+	background: white;
+}
+tr:nth-child(even) {
+	background: #E8E6D1;
+}
+
+#generalCost
+{
+	color:black;
+	font-size: 15px;
+	float: right;
+	margin-top: -25px;
 }
 
 

@@ -16,12 +16,12 @@ public class CoffeeMachineService {
     public void showAssortiment()
     {
         System.out.println("***************Assortiment*****************");
-        showBeveragesInMachine();
-        showIngredientsInMachine();
+       // showBeveragesInMachine();
+       // showIngredientsInMachine();
 
     }
 
-    public void showBeveragesInMachine()
+    public List<Content> getBeveragesInMachine()
     {
         System.out.println("Beverages: ");
         ContentDaoImpl contentDao = ContentWorkHelper.generateContentDao(ContentType.BEVERAGE);
@@ -31,12 +31,13 @@ public class CoffeeMachineService {
         } catch (DaoException e) {
             System.out.println("Not found beverages");
         }
-        for (Content beverage : beverages) {
+        /*for (Content beverage : beverages) {
             System.out.println("\t"+ beverage.getId()+ ". " + beverage.getTitle()+". Cost:"+ beverage.getCost()+" Count:"+ beverage.getCount());
-        }
+        }*/
+        return beverages;
     }
 
-    public void showIngredientsInMachine()
+    public List<Content> getIngredientsInMachine()
     {
         ContentDaoImpl contentDao = ContentWorkHelper.generateContentDao(ContentType.INGREDIENT);
         System.out.println("Ingredients: ");
@@ -46,9 +47,7 @@ public class CoffeeMachineService {
         } catch (DaoException e) {
             System.out.println("Not found ingredients");
         }
-        for (Content ingredient : ingredients) {
-            System.out.println("\t" +ingredient.getId()+ ". " +ingredient.getTitle()+". Cost:"+ingredient.getCost()+" Count:"+ingredient.getCount());
-        }
+        return ingredients;
     }
 
 }

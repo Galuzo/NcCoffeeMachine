@@ -4,6 +4,7 @@ import by.training.nc.dev3.beans.ContentInBill;
 import by.training.nc.dev3.beans.Bill;
 import by.training.nc.dev3.beans.Content;
 import by.training.nc.dev3.beans.User;
+import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.dao.GenericDao;
 import by.training.nc.dev3.dao.implementations.BeverageDaoImpl;
 import by.training.nc.dev3.dao.implementations.BillDaoImpl;
@@ -22,37 +23,89 @@ import java.util.*;
  */
 public class BillService {
 
-    public void showResultBill(User user) {
+
+
+    public Map<Content,List<Content>> showResultBill(User user) throws DaoException{
+        HashMap<Content, List<Content>>listOfBill = new HashMap<Content, List<Content>>();
         ContentInBillDaoImpl contentInBillDao = new ContentInBillDaoImpl();
         GenericDao billDao = new BillDaoImpl();
-        ContentDaoImpl ingredientDao = new IngredientDaoImpl();
         ContentDaoImpl beverageDao = new BeverageDaoImpl();
-        double generalCost = 0;
+        Content beverage=null;
+        Bill bill=new Bill();
+        double generalCost = 0.0;
+        List<Content> listIngredientOfBeverage = new ArrayList<Content>();
         try {
-            Bill bill = (Bill) billDao.getByPK(user.getId());
+            bill = (Bill) billDao.getByPK(user.getId());
             List<ContentInBill> billWithId = contentInBillDao.getByBill(bill.getId());
             for (ContentInBill i : billWithId) {
-                Content beverage = beverageDao.getByPK(i.getIdBeverage());
-                if (i.getIdIngredient() != 0) {
-                    Content ingredient = ingredientDao.getByPK(i.getIdIngredient());
-                    System.out.println(i.getId() + ". " + beverage.getTitle() + " cost:" + beverage.getCost() + " {ingredient:" + ingredient.getTitle() + " cost:" + ingredient.getCost() + "}" + " count:" + i.getBeverageCount());
-                    generalCost += beverage.getCost() * i.getBeverageCount();
-                    generalCost += ingredient.getCost() * i.getBeverageCount();
-                } else {
-
-                    System.out.println(i.getId() + ". " + beverage.getTitle() + " cost:" + beverage.getCost() + " count:" + i.getBeverageCount());
-                    generalCost += beverage.getCost() * i.getBeverageCount();
+                beverage = beverageDao.getByPK(i.getIdBeverage());
+                if(listOfBill.get(beverage)!=null)
+                {
+                    listIngredientOfBeverage = listOfBill.get(beverage);
+                    generalCost=putInList(i,listIngredientOfBeverage,generalCost);
+                    listOfBill.put(beverage, listIngredientOfBeverage);
+                }
+                else
+                {
+                    listIngredientOfBeverage = new ArrayList<Content>();
+                    generalCost=putInList(i,listIngredientOfBeverage,generalCost);
+                    listOfBill.put(beverage, listIngredientOfBeverage);
                 }
 
             }
-            bill.setDate(new GregorianCalendar().getTime());
-            bill.setGeneralCost(generalCost);
-            billDao.update(bill);
             System.out.println("Current Date: " + bill.getDate());
             System.out.println("General cost:: " + bill.getGeneralCost());
+        } catch (Exception e) {
+            throw new DaoException("The bill is empty");
+        }
+        finally {
+            bill.setDate(new GregorianCalendar().getTime());
+            bill.setGeneralCost(generalCost);
+            try {
+                billDao.update(bill);
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
+        }
+        return listOfBill;
+    }
+
+
+    private double putInList(ContentInBill i,List<Content> listIngredientOfBeverage,double generalCost) {
+        ContentDaoImpl ingredientDao = new IngredientDaoImpl();
+        ContentDaoImpl beverageDao = new BeverageDaoImpl();
+        try {
+            if (i.getIdIngredient() != 0) {
+                Content ingredient = ingredientDao.getByPK(i.getIdIngredient());
+                for (int count=0;count<i.getBeverageCount();count++) {
+                    listIngredientOfBeverage.add(ingredient);
+                    generalCost+=ingredient.getCost();
+                    generalCost+=beverageDao.getByPK(i.getIdBeverage()).getCost();
+                }
+            } else {
+                for (int count=0;count<i.getBeverageCount();count++) {
+                    listIngredientOfBeverage.add(null);
+                    generalCost+=beverageDao.getByPK(i.getIdBeverage()).getCost();
+                }
+            }
+        } catch (DaoException e ) {
+            System.out.println(e);
+        }
+        return generalCost;
+    }
+
+    public double getCost(User user)
+    {
+        BillDaoImpl billDao = new BillDaoImpl();
+        Bill bill=null;
+        try {
+            bill=billDao.getByUser(user.getId());
+
         } catch (DaoException e) {
-            System.out.println("Error showResult" + e);
+            e.printStackTrace();
         }
 
+        return  bill.getGeneralCost();
     }
+
 }

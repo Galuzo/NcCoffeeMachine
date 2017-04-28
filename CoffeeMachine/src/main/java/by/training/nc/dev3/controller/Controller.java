@@ -24,14 +24,15 @@ public class Controller extends HttpServlet {
         CommandFactory commandFactory = CommandFactory.INSTANSE;
         Command command = commandFactory.defineCommand(request);
         page = command.execute(request);
-        if(page == null){
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-            System.out.println("null");
+        if(page != null){
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
             dispatcher.forward(request, response);
+            }
+        else{
+            page = "/index.jsp";
+            response.sendRedirect(request.getContextPath() + page);
         }
-        else {
-            System.out.println(page);
-        }
+
 
     }
 

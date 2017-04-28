@@ -5,6 +5,7 @@ import by.training.nc.dev3.beans.ContentInBill;
 import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.dao.implementations.commons.GenericDaoImpl;
 import by.training.nc.dev3.exceptions.DaoException;
+import by.training.nc.dev3.exceptions.NotFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,8 +47,8 @@ public class ContentInBillDaoImpl extends GenericDaoImpl<ContentInBill> {
                 contentInBill.setBeverageCount(rs.getInt("beverageCount"));
                 result.add(contentInBill);
             }
-        } catch (SQLException e) {
-            throw new DaoException("Error parsing result",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
         return result;
     }
@@ -58,8 +59,8 @@ public class ContentInBillDaoImpl extends GenericDaoImpl<ContentInBill> {
             statement.setDouble(2,object.getIdBeverage());
             statement.setObject(3,object.getIdIngredient());
             statement.setObject(4,object.getBeverageCount());
-        } catch (SQLException e) {
-            throw new DaoException("Error creating prepare statement for insert",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
     }
 
@@ -70,27 +71,39 @@ public class ContentInBillDaoImpl extends GenericDaoImpl<ContentInBill> {
             statement.setObject(3,object.getIdIngredient());
             statement.setLong(4,object.getBeverageCount());
             statement.setLong(5,object.getId());
-        } catch (SQLException e) {
-            throw new DaoException("Error creating prepare statement for uprate",e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
     }
 
-    public List<ContentInBill> getByBillAndBeverage(int idBill,int idBeverage)throws DaoException{
+    public List<ContentInBill> getByBillAndBeverage(int idBill,int idBeverage)throws NotFoundException{
         List<ContentInBill> list = new ArrayList<ContentInBill>();
         ContentInBill beverage=null;
+        Connection connection=null;
         try {
-            Connection connection= ConnectionPool.getConnection();
+             connection= ConnectionPool.getConnection();
             String sql = "SELECT * FROM contentinbill WHERE idBill=? AND idBeverage=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1,idBill);
             statement.setInt(2,idBeverage);
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()){
-                beverage = new ContentInBill(resultSet.getInt("id"),resultSet.getInt("idBill"), resultSet.getInt("idBeverage"), resultSet.getInt("idIngredient"), resultSet.getInt("beverageCount"));
-                list.add(beverage);
+            if(resultSet.isBeforeFirst())
+            {
+                while (resultSet.next()) {
+                    beverage = new ContentInBill(resultSet.getInt("id"), resultSet.getInt("idBill"), resultSet.getInt("idBeverage"), resultSet.getInt("idIngredient"), resultSet.getInt("beverageCount"));
+                    list.add(beverage);
+                }
             }
-        } catch (SQLException e ) {
-            throw new DaoException("Element not found", e);
+            else
+            {
+                throw new NotFoundException("Record with idBill = " + idBill + " and with IdBeverage="+idBeverage+ " not found.");
+
+            }
+        } catch (Exception e ) {
+            throw new NotFoundException(e);
+        }
+        finally {
+            ConnectionPool.closeConnection(connection);
         }
         return list;
     }
@@ -98,18 +111,28 @@ public class ContentInBillDaoImpl extends GenericDaoImpl<ContentInBill> {
     public List<ContentInBill> getByBill(int idBill)throws DaoException{
         List<ContentInBill> list = new ArrayList<ContentInBill>();
         ContentInBill beverage=null;
+        Connection connection = null;
         try {
-            Connection connection= ConnectionPool.getConnection();
+             connection= ConnectionPool.getConnection();
             String sql = "SELECT * FROM contentinbill WHERE idBill=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1,idBill);
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()){
-                beverage = new ContentInBill(resultSet.getInt("id"),resultSet.getInt("idBill"), resultSet.getInt("idBeverage"), resultSet.getInt("idIngredient"), resultSet.getInt("beverageCount"));
-                list.add(beverage);
+            if(resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    beverage = new ContentInBill(resultSet.getInt("id"), resultSet.getInt("idBill"), resultSet.getInt("idBeverage"), resultSet.getInt("idIngredient"), resultSet.getInt("beverageCount"));
+                    list.add(beverage);
+                }
             }
-        } catch (SQLException e ) {
-            throw new DaoException("Element not found", e);
+            else
+            {
+                throw new DaoException("Record with idBill = " + idBill + " not found.");
+            }
+        } catch (Exception e ) {
+            throw new DaoException( e);
+        }
+        finally {
+            ConnectionPool.closeConnection(connection);
         }
         return list;
     }

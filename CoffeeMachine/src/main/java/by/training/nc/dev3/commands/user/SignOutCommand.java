@@ -5,10 +5,11 @@ import by.training.nc.dev3.commands.Command;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by Win on 18.04.2017.
+ * Created by Win on 20.04.2017.
  */
-public class GoToLogin implements Command {
+public class SignOutCommand implements Command {
     public String execute(HttpServletRequest request) {
-        return null;
+        request.getSession().invalidate();
+        return "/index.jsp";
     }
 }

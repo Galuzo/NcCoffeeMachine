@@ -32,10 +32,10 @@ public abstract class GenericDaoImpl<T extends Entity> implements GenericDao<T> 
 
     public T persist(T object) throws DaoException {
         T persistInstance;
-        // Добавляем запись
         String sql = getCreateQuery();
+        Connection  connection=null;
         try {
-            Connection connection = ConnectionPool.getConnection();
+             connection = ConnectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             prepareStatementForInsert(statement, object);
             int count = statement.executeUpdate();
@@ -50,8 +50,11 @@ public abstract class GenericDaoImpl<T extends Entity> implements GenericDao<T> 
                 throw new DaoException("Exception on findByPK new persist data.");
             }
             persistInstance = list.iterator().next();
-        } catch (SQLException e) {
-            throw new DaoException("Create error", e);
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+        finally {
+            ConnectionPool.closeConnection(connection);
         }
         return persistInstance;
     }
@@ -61,14 +64,18 @@ public abstract class GenericDaoImpl<T extends Entity> implements GenericDao<T> 
         List<T> list;
         String sql = getSelectQuery();
         sql += " WHERE id = ?";
+        Connection connection=null;
         try {
-            Connection connection = ConnectionPool.getConnection();
+             connection = ConnectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, key);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new DaoException("Error of getting ", e);
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+        finally {
+            ConnectionPool.closeConnection(connection);
         }
         if (list == null || list.size() == 0) {
             throw new DaoException("Record with PK = " + key + " not found.");
@@ -81,23 +88,30 @@ public abstract class GenericDaoImpl<T extends Entity> implements GenericDao<T> 
 
     public void update(T object) throws DaoException {
         String sql = getUpdateQuery();
+        Connection connection=null;
         try {
-            Connection connection = ConnectionPool.getConnection();
+             connection = ConnectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             prepareStatementForUpdate(statement, object); // заполнение аргументов запроса оставим на совесть потомков
             int count = statement.executeUpdate();
             if (count != 1) {
                 throw new DaoException("On update modify more then 1 record: " + count);
             }
-        } catch (SQLException e) {
-            throw new DaoException("Error of updating", e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
+        finally {
+            ConnectionPool.closeConnection(connection);
+        }
+
+
     }
 
     public void delete(T object) throws DaoException {
         String sql = getDeleteQuery();
+        Connection connection=null;
         try {
-            Connection connection = ConnectionPool.getConnection();
+             connection = ConnectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setObject(1, object.getId());
             int count = statement.executeUpdate();
@@ -105,21 +119,29 @@ public abstract class GenericDaoImpl<T extends Entity> implements GenericDao<T> 
                 throw new DaoException("On delete modify more then 1 record: " + count);
             }
             statement.close();
-        } catch (SQLException e) {
-            throw new DaoException("Error of delete", e);
+        } catch (Exception e) {
+            throw new DaoException(e);
         }
+        finally {
+            ConnectionPool.closeConnection(connection);
+        }
+
     }
 
     public List<T> getAll() throws DaoException {
         List<T> list;
         String sql = getSelectQuery();
+        Connection connection = null;
         try {
-            Connection connection = ConnectionPool.getConnection();
+             connection = ConnectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new DaoException("Error of getting all" + e);
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+        finally {
+            ConnectionPool.closeConnection(connection);
         }
         return list;
     }
