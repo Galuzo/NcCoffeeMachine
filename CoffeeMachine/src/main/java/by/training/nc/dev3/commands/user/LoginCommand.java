@@ -14,7 +14,9 @@ import filters.UserType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * Created by Win on 18.04.2017.
@@ -25,7 +27,8 @@ public class LoginCommand implements Command {
         String login = request.getParameter("name");
         String password = request.getParameter("password");
         HttpSession httpSession = request.getSession();
-            User user = CheckUserService.isRegistered(login);
+        Locale local=new Locale((String)request.getSession().getAttribute("language"));
+        User user = CheckUserService.isRegistered(login);
             if(user!=null) {
                 if (password.equals(user.getPassword())) {
                     httpSession = request.getSession(true);
@@ -37,23 +40,31 @@ public class LoginCommand implements Command {
                      login = request.getParameter("name");
                     switch (userType) {
                         case ADMINISTRATOR:
+                            String url = ResourceBundle.getBundle("pages").getString("path.page.admin");
+                            request.getSession().setAttribute("url",url);
                             DataSender.sendMainData(request, user);
-                            page = "/jsp/administrator/main.jsp";
+                            page = url;
                             break;
                         case ClIENT:
+                            url = ResourceBundle.getBundle("pages").getString("path.page.client");
+                            request.getSession().setAttribute("url",url);
                             DataSender.sendMainData(request, user);
-                            page = "/jsp/client/main.jsp";
+                            page = url;
                             break;
                     }
 
                 } else {
-                    httpSession.setAttribute("error", "Entered password is incorrect");
-                    page = "/index.jsp";
+                    String url = ResourceBundle.getBundle("pages").getString("path.page.user");
+                    request.getSession().setAttribute("url",url);
+                    httpSession.setAttribute("error", ResourceBundle.getBundle("Messages",local).getString("error.label.wrongPassword"));
+                    page = url;
                 }
             }
             else {
-                httpSession.setAttribute("error","Your login is wrong");
-                page = "/index.jsp";
+                String url = ResourceBundle.getBundle("pages").getString("path.page.user");
+                request.getSession().setAttribute("url",url);
+                httpSession.setAttribute("error", ResourceBundle.getBundle("Messages",local).getString("error.label.wrongLogin"));
+                page = url;
             }
         return page;
     }

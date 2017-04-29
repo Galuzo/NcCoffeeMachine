@@ -9,6 +9,7 @@ import by.training.nc.dev3.instruments.DataSender;
 import by.training.nc.dev3.services.ClientService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ResourceBundle;
 
 /**
  * Created by Win on 22.04.2017.
@@ -18,6 +19,7 @@ public class AddIngredientInBillCommand implements Command {
         IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
         int idBeverage = Integer.parseInt(request.getParameter("idBeverage"));
         String titleIngredient=request.getParameter("selectedIngredient");
+        String url = ResourceBundle.getBundle("pages").getString("path.page.client");
         User user =(User) request.getSession().getAttribute("user");
         if(user!=null) {
             try {
@@ -29,12 +31,14 @@ public class AddIngredientInBillCommand implements Command {
                 request.setAttribute("ingredientError", e.getMessage());
                 DataSender.sendMainData(request, user);
             }
-
-            return "/jsp/client/main.jsp";
+            request.getSession().setAttribute("url",url);
+            return url;
         }
         else
         {
-            return "/index.jsp";
+            url = ResourceBundle.getBundle("pages").getString("path.page.user");
+            request.getSession().setAttribute("url",url);
+            return url;
         }
     }
 }

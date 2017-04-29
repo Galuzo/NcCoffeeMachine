@@ -12,6 +12,8 @@ import by.training.nc.dev3.services.CheckUserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Created by Win on 18.04.2017.
@@ -24,13 +26,15 @@ public class RegistrationCommand implements Command {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
+        Locale local=new Locale((String)request.getSession().getAttribute("language"));
         HttpSession httpSession=request.getSession();
         User checkUser;
         try {
              checkUser=CheckUserService.isRegistered(name);
             if(checkUser!=null) {
 
-                httpSession.setAttribute("error","The user is already registered");
+               httpSession.setAttribute("error", ResourceBundle.getBundle("Messages",local).getString("error.label.alreadyRegistered"));
+                request.setAttribute("url","/jsp/signUp.jsp");
                 return "/jsp/signUp.jsp";
             }
             else {
@@ -47,6 +51,7 @@ public class RegistrationCommand implements Command {
         } catch (DaoException e) {
             e.printStackTrace();
         }
+        request.getSession().setAttribute("url","/jsp/client/main.jsp");
         return "/jsp/client/main.jsp";
 
 

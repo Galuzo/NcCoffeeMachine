@@ -387,6 +387,17 @@ tr:nth-child(even) {
 	float: right;
 	margin-top: -25px;
 }
+#languageSelect
+{
+	float:left;
+	margin-left: 40px;
+	margin-top: 5px;
+}
+
+#buttonSignUp{
+	width: 150px;
+	margin: auto;
+}
 
 
 

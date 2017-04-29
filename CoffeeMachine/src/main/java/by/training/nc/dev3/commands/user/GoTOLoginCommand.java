@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class GoTOLoginCommand implements Command {
     public String execute(HttpServletRequest request) {
+        request.getSession().setAttribute("url","/index.jsp");
         return "/index.jsp";
     }
 }

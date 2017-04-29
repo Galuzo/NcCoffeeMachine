@@ -4,19 +4,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
+<c:set var="language" value="${not empty language ? language : 'ru'}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="Messages" var="msg" />
 <jsp:include page="/META-INF/templates/head.jsp" />
 <body>
     <jsp:include page="/META-INF/templates/header.jsp" />
     <div class="content">
-        <h3>${user.login},Вы вошли в систему как пользователь</h3>
-            <h1 id="h1_center">Assortiment</h1>
+        <h3><fmt:message key="client.label.welcomeRoleUser" bundle="${msg}" /></h3>
+            <h1 id="h1_center"><fmt:message key="client.label.assortiment" bundle="${msg}" /></h1>
             <div >
                 <table>
                     <caption>
-                        Beverages
+                        <fmt:message key="client.label.beverages" bundle="${msg}" />
                     </caption>
                     <tr>
-                        <th>id</th><th>Title</th><th>Cost</th><th>Count</th><th>Function</th>
+                        <th> <fmt:message key="client.label.id" bundle="${msg}" /></th>
+                        <th> <fmt:message key="client.label.title" bundle="${msg}" /></th>
+                        <th> <fmt:message key="client.label.cost" bundle="${msg}" /></th>
+                        <th> <fmt:message key="client.label.count" bundle="${msg}" /></th>
+                        <th> <fmt:message key="client.label.function" bundle="${msg}" /></th>
                     </tr>
                     <c:forEach items="${beverages}" var="beverage">
                         <tr>
@@ -27,7 +34,7 @@
                             <td><form  method="post" action="controller">
                                     <input type="hidden" name="command" value="addBeverageInBill" />
                                     <input type="hidden" name="id" value="${beverage.id}" />
-                                    <input type="submit"  value="Add beverage in bill" >
+                                    <input type="submit"  value="<fmt:message key="client.button.addBeverageInBill" bundle="${msg}" />" >
                                 </form>
                             </td>
                         </tr>
@@ -38,10 +45,13 @@
             <div>
                 <table>
                     <caption>
-                        Ingredients
+                        <fmt:message key="client.label.ingredients" bundle="${msg}" />
                     </caption>
                     <tr>
-                        <th>id</th><th>Title</th><th>Cost</th><th>Count</th>
+                        <th> <fmt:message key="client.label.id" bundle="${msg}" /></th>
+                        <th> <fmt:message key="client.label.title" bundle="${msg}" /></th>
+                        <th> <fmt:message key="client.label.cost" bundle="${msg}" /></th>
+                        <th> <fmt:message key="client.label.count" bundle="${msg}" /></th>
                     </tr>
                     <c:forEach items="${ingredients}" var="ingredient">
                         <tr>
@@ -55,14 +65,14 @@
             </div>
             <table>
                 <caption>
-                    Bill
+                    <fmt:message key="client.label.bill" bundle="${msg}" />
                 </caption>
                 <tr>
-                    <th>Beverage</th>
-                    <th>Ingredient</th>
-                    <th>Price,$.</th>
-                    <th>Select Ingredient</th>
-                    <th>Function</th>
+                    <th><fmt:message key="client.label.beverage" bundle="${msg}" /></th>
+                    <th><fmt:message key="client.label.ingredient" bundle="${msg}" /></th>
+                    <th><fmt:message key="client.label.price" bundle="${msg}" />,$.</th>
+                    <th><fmt:message key="client.label.selectIngredient" bundle="${msg}" /></th>
+                    <th><fmt:message key="client.label.function" bundle="${msg}" /></th>
                 </tr>
                 ${ingredientError}
                 <c:forEach items="${billMap}" var="beverage">
@@ -82,13 +92,13 @@
                                     <td>
                                         <input type="hidden" name="command" value="addIngredientInBill" />
                                         <input type="hidden" name="idBeverage" value="${beverage.key.id}" />
-                                        <input type="submit"  value="Add ingredient in bill" >
+                                        <input type="submit"  value="<fmt:message key="client.button.addIngredientInBill" bundle="${msg}" />" >
                                 </form>
                                 <form  method="post" action="controller">
                                     <input type="hidden" name="command" value="removeBeverageFromBill" />
                                     <input type="hidden" name="idBeverage" value="${beverage.key.id}" />
                                     <input type="hidden" name="idIngredient" value="${ingredient.id}" />
-                                    <input type="submit"  value="Remove beverage" >
+                                    <input type="submit"  value="<fmt:message key="client.button.removeBeverageFromBill" bundle="${msg}" />" >
                                 </form>
                                 </td>
                             </c:when>
@@ -99,13 +109,13 @@
                                             <input type="hidden" name="command" value="removeIngredientFromBill" />
                                             <input type="hidden" name="idBeverage" value="${beverage.key.id}" />
                                             <input type="hidden" name="idIngredient" value="${ingredient.id}" />
-                                            <input type="submit"  value="Remove ingredient" >
+                                            <input type="submit"  value="<fmt:message key="client.button.removeIngredientFromBill" bundle="${msg}" />" >
                                         </form>
                                         <form  method="post" action="controller">
                                             <input type="hidden" name="command" value="removeBeverageFromBill" />
                                             <input type="hidden" name="idBeverage" value="${beverage.key.id}" />
                                             <input type="hidden" name="idIngredient" value="${ingredient.id}" />
-                                            <input type="submit"  value="Remove beverage" >
+                                            <input type="submit"  value="<fmt:message key="client.button.removeBeverageFromBill" bundle="${msg}" />" >
                                         </form>
                                     </td>
                                 </c:otherwise>
@@ -114,10 +124,10 @@
                     </c:forEach>
                 </c:forEach>
             </table>
-            <P id="generalCost">General cost:<fmt:formatNumber type="number" maxFractionDigits="2" value="${generalCost}"/></P>
+            <P id="generalCost"><fmt:message key="client.label.generalCost" bundle="${msg}" />:<fmt:formatNumber type="number" maxFractionDigits="2" value="${generalCost}"/></P>
             <form  id="form" method="post" action="controller">
                 <input type="hidden" name="command" value="signOut" />
-                <input type="submit" value="Sign Out" >
+                <input type="submit" value="<fmt:message key="client.label.signOut" bundle="${msg}" />" >
             </form>
     </div>
 </body>

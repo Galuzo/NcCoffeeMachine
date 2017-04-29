@@ -4,20 +4,18 @@ import by.training.nc.dev3.commands.Command;
 import by.training.nc.dev3.commands.client.AddIngredientInBillCommand;
 import by.training.nc.dev3.commands.client.RemoveBeverageCommand;
 import by.training.nc.dev3.commands.client.RemoveIngredientCommand;
-import by.training.nc.dev3.commands.user.SignOutCommand;
+import by.training.nc.dev3.commands.user.*;
 import by.training.nc.dev3.commands.admin.AddExistBeverageCommand;
 import by.training.nc.dev3.commands.admin.AddNewBeverageCommand;
 import by.training.nc.dev3.commands.admin.AddExistIngredientCommand;
 import by.training.nc.dev3.commands.admin.AddNewIngredientCommand;
 import by.training.nc.dev3.commands.client.AddBeverageInBillCommand;
-import by.training.nc.dev3.commands.user.LoginCommand;
-import by.training.nc.dev3.commands.user.RegistrationCommand;
 
 /**
  * Created by Win on 18.04.2017.
  */
 public enum CommandType {
-    LOGIN,REGISTRATION,SIGNOUT,
+    LOGIN,GOTOSIGNUP,REGISTRATION,SIGNOUT,CHANGELANGUAGE,
 
     ADDEXISTBEVERAGE,ADDNEWBEVERAGE,ADDEXISTINGREDIENT,ADDNEWINGREDIENT,
 
@@ -27,6 +25,8 @@ public enum CommandType {
         switch (this) {
             case LOGIN:
                 return new LoginCommand();
+            case GOTOSIGNUP:
+                return new GoToSignUp();
             case REGISTRATION:
                 return new RegistrationCommand();
             case ADDEXISTBEVERAGE:
@@ -47,6 +47,8 @@ public enum CommandType {
                 return new RemoveIngredientCommand();
             case REMOVEBEVERAGEFROMBILL:
                 return new RemoveBeverageCommand();
+            case CHANGELANGUAGE:
+                return new ChangeLanguageCommand();
                 default:
                     throw new EnumConstantNotPresentException(this.getDeclaringClass(), this.name());
         }

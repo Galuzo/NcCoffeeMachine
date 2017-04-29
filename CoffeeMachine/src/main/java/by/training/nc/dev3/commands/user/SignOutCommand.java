@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SignOutCommand implements Command {
     public String execute(HttpServletRequest request) {
         request.getSession().invalidate();
+        request.getSession().setAttribute("url","/index.jsp");
         return "/index.jsp";
     }
 }

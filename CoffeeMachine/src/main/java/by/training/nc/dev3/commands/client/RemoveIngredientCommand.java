@@ -8,6 +8,7 @@ import by.training.nc.dev3.services.ClientService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ResourceBundle;
 
 /**
  * Created by Win on 25.04.2017.
@@ -17,6 +18,8 @@ public class RemoveIngredientCommand implements Command{
         int idBeverage=Integer.parseInt(request.getParameter("idBeverage"));
         int idIngredient=Integer.parseInt(request.getParameter("idIngredient"));
         HttpSession httpSession = request.getSession();
+        String url = ResourceBundle.getBundle("pages").getString("path.page.client");
+
         User user=(User)httpSession.getAttribute("user");
         ClientService clientService = new ClientService();
         try {
@@ -26,6 +29,7 @@ public class RemoveIngredientCommand implements Command{
             DataSender.sendMainData(request, user);
             request.setAttribute("ingredientError",e.getMessage());
         }
-        return "/jsp/client/main.jsp";
+        request.getSession().setAttribute("url",url);
+        return url;
     }
 }

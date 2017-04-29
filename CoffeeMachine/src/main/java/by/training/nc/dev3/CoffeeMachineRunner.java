@@ -7,21 +7,18 @@ import by.training.nc.dev3.services.BillService;
 import by.training.nc.dev3.services.ClientService;
 import by.training.nc.dev3.services.CoffeeMachineService;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 
 /**
  * Created by Win on 18.03.2017.
  */
 public class CoffeeMachineRunner {
     public static void main(String[] args) {
-    CoffeeMachineService coffeeMachineService=new CoffeeMachineService();
-    ClientService clientService=new ClientService();
-        BillService billService = new BillService();
-        User user = new User(1, "galuzo", "dasd", 1);
-    AdminService adminService=new AdminService();
-    adminService.addExistContent(ContentType.INGREDIENT,1,10);
-    adminService.addNewContent(ContentType.INGREDIENT,"Milk",1.2,5);
-   // clientService.addBeverageInBill(user,1);
-    coffeeMachineService.showAssortiment();
+
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("text",new Locale("en"));
+        System.out.println(resourceBundle.getString("login.button.submit"));
    // clientService.addIngredient(user,1,1);
     //billService.showResultBill(user);
     //clientService.addIngredient(user,1,1);

@@ -6,6 +6,7 @@ import by.training.nc.dev3.services.BillService;
 import by.training.nc.dev3.services.CoffeeMachineService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 /**
  * Created by Win on 23.04.2017.
@@ -13,15 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 public class DataSender {
     public static void sendMainData(HttpServletRequest request,User user)
     {
-        CoffeeMachineService coffeeMachineService = new CoffeeMachineService();
-        BillService billService = new BillService();
-        try {
-            request.setAttribute("billMap",billService.showResultBill(user));
-        } catch (DaoException e) {
-            request.setAttribute("ingredientError", e.getMessage());
+        if(user!=null) {
+            CoffeeMachineService coffeeMachineService = new CoffeeMachineService();
+            BillService billService = new BillService();
+            try {
+                request.setAttribute("billMap", billService.showResultBill(user));
+            } catch (DaoException e) {
+                request.setAttribute("ingredientError", e.getMessage());
+            }
+            request.setAttribute("beverages", coffeeMachineService.getBeveragesInMachine());
+            request.setAttribute("ingredients", coffeeMachineService.getIngredientsInMachine());
+            request.setAttribute("generalCost", billService.getCost(user));
         }
-        request.setAttribute("beverages",coffeeMachineService.getBeveragesInMachine());
-        request.setAttribute("ingredients",coffeeMachineService.getIngredientsInMachine());
-        request.setAttribute("generalCost",billService.getCost(user));
     }
 }

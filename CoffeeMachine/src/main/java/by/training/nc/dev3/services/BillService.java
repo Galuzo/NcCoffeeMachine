@@ -56,7 +56,7 @@ public class BillService {
             System.out.println("Current Date: " + bill.getDate());
             System.out.println("General cost:: " + bill.getGeneralCost());
         } catch (Exception e) {
-            throw new DaoException("The bill is empty");
+            throw new DaoException( ResourceBundle.getBundle("Messages").getString("error.label.emptyBill"));
         }
         finally {
             bill.setDate(new GregorianCalendar().getTime());
